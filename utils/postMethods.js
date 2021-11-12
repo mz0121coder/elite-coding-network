@@ -70,3 +70,12 @@ export const submitNewPost = async (
       alert(catchErrors(error));
     }
   };
+
+  export const deleteComment = async (postId, commentId, setComments) => {
+    try {
+      await Axios.delete(`/${postId}/${commentId}`);
+      setComments((prev) => prev.filter((comment) => comment._id !== commentId));
+    } catch (error) {
+      alert(catchErrors(error));
+    }
+  };
