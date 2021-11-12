@@ -36,3 +36,24 @@ export const follow = async (followUserId, setUserFollowers) => {
       alert(catchErrors(error));
     }
   };
+
+  export const profileUpdate = async (profile, setLoading, setError, dpLink) => {
+    try {
+      const { bio, github, at, connectdevelop, linkify } = profile;
+  
+      await Axios.post(`/update`, {
+        bio,
+        github,
+        at,
+        connectdevelop,
+        linkify,
+        dpLink,
+      });
+  
+      setLoading(false);
+      Router.reload();
+    } catch (error) {
+      setError(catchErrors(error));
+      setLoading(false);
+    }
+  };
