@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
         const receiverSocket = findConnection(postByUserId);
 
         if (receiverSocket && like) {
-          // WHEN YOU WANT TO SEND DATA TO ONE PARTICULAR CLIENT
+          // SEND DATA TO ONE PARTICULAR CLIENT
           io.to(receiverSocket.socketId).emit("newNotificationReceived", {
             name,
             dpLink,
@@ -73,7 +73,7 @@ io.on("connection", (socket) => {
     const receiverSocket = findConnection(msgSendToUserId);
 
     if (receiverSocket) {
-      // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
+      // SEND MESSAGE TO A PARTICULAR SOCKET
       io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
     }
     //
@@ -95,7 +95,7 @@ io.on("connection", (socket) => {
     const receiverSocket = findConnection(msgSendToUserId);
 
     if (receiverSocket) {
-      // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
+      // SEND MESSAGE TO A PARTICULAR SOCKET
       io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
     }
     //
