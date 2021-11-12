@@ -53,3 +53,20 @@ export const submitNewPost = async (
     }
   };
   
+  export const postComment = async (postId, user, text, setComments, setText) => {
+    try {
+      const res = await Axios.post(`/comment/${postId}`, { text });
+  
+      const newComment = {
+        _id: res.data,
+        user,
+        text,
+        date: Date.now(),
+      };
+  
+      setComments((prev) => [newComment, ...prev]);
+      setText("");
+    } catch (error) {
+      alert(catchErrors(error));
+    }
+  };
