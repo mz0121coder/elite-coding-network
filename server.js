@@ -47,5 +47,82 @@ io.on("connection", (socket) => {
       if (postByUserId !== userId) {
         const receiverSocket = findConnection(postByUserId);
 
+        if (receiverSocket && like) {
+          // WHEN YOU WANT TO SEND DATA TO ONE PARTICULAR CLIENT
+          io.to(receiverSocket.socketId).emit("newNotificationReceived", {
+            name,
+            dpLink,
+            username,
+            postId,
+          });
+        }
+      }
+    }
+  });
 
-        
+  socket.on("loadMessages", async ({ userId, msgsWithUser }) => {
+    const { chat, error } = await loadMessages(userId, msgsWithUser);
+
+    !error
+      ? socket.emit("messagesLoaded", { chat })
+      : socket.emit("noChatFound");
+  });
+
+  socket.on("sendNewMsg", async ({ userId, msgSendToUserId, msg }) => {
+    const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
+    const receiverSocket = findConnection(msgSendToUserId);
+
+    if (receiverSocket) {
+      // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
+      io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
+    }
+    //
+    else {
+      await setMsgToUnread(msgSendToUserId);
+    }
+
+    !error && socket.emit("msgSent", { newMsg });
+  });
+
+  socket.on("deleteMsg", async ({ userId, msgsWithUser, messageId }) => {
+    const { success } = await deleteMsg(userId, msgsWithUser, messageId);
+
+    if (success) socket.emit("msgDeleted");
+  });
+
+  socket.on("sendMsgFromAlert", async ({ userId, msgSendToUserId, msg }) => {
+    const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
+    const receiverSocket = findConnection(msgSendToUserId);
+
+    if (receiverSocket) {
+      // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
+      io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
+    }
+    //
+    else {
+      await setMsgToUnread(msgSendToUserId);
+    }
+
+    !error && socket.emit("msgSentFromAlert");
+  });
+
+  socket.on("disconnect", () => deleteUser(socket.id));
+});
+
+nextApp.prepare().then(() => {
+  app.use("/api/signup", require("./api/signup"));
+  app.use("/api/auth", require("./api/auth"));
+  app.use("/api/search", require("./api/search"));
+  app.use("/api/posts", require("./api/posts"));
+  app.use("/api/profile", require("./api/profile"));
+  app.use("/api/notifications", require("./api/notifications"));
+  app.use("/api/chats", require("./api/chats"));
+  app.use("/api/reset", require("./api/reset"));
+
+  app.all("*", (req, res) => handle(req, res));
+
+  server.listen(PORT, (err) => {
+    if (err) throw err;
+    console.log("Express server running");
+  });
+});
