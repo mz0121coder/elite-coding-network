@@ -68,3 +68,18 @@ export const follow = async (followUserId, setUserFollowers) => {
       alert(catchErrors(error));
     }
   };
+
+  export const toggleMsgAlert = async (
+    popupSetting,
+    setPopupSetting,
+    setSuccess
+  ) => {
+    try {
+      await Axios.post(`/settings/messageAlert`);
+  
+      setPopupSetting(!popupSetting);
+      setSuccess(true);
+    } catch (error) {
+      alert(catchErrors(error));
+    }
+  };
