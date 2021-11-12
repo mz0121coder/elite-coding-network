@@ -57,3 +57,14 @@ export const follow = async (followUserId, setUserFollowers) => {
       setLoading(false);
     }
   };
+
+  export const pwUpdate = async (setSuccess, userPasswords) => {
+    const { currentPassword, newPassword } = userPasswords;
+    try {
+      await Axios.post(`/settings/password`, { currentPassword, newPassword });
+  
+      setSuccess(true);
+    } catch (error) {
+      alert(catchErrors(error));
+    }
+  };
