@@ -21,3 +21,18 @@ export const follow = async (followUserId, setUserFollowers) => {
       alert(catchErrors(error));
     }
   };
+
+  export const unfollow = async (unfollowUserId, setUserFollowers) => {
+    try {
+      await Axios.put(`/unfollow/${unfollowUserId}`);
+  
+      setUserFollowers((prev) => ({
+        ...prev,
+        following: prev.following.filter(
+          (following) => following.user !== unfollowUserId
+        ),
+      }));
+    } catch (error) {
+      alert(catchErrors(error));
+    }
+  };
