@@ -95,6 +95,45 @@ router.get("/following/:userId", authMiddleware, async (req, res) => {
       return res.status(500).send("Server Error");
     }
   });
+
+  // FOLLOW A USER
+router.post("/follow/:followUserId", authMiddleware, async (req, res) => {
+    try {
+      const { userId } = req;
+      const { followUserId } = req.params;
+  
+      const user = await FollowerModel.findOne({ user: userId });
+      const toFollow = await FollowerModel.findOne({ user: followUserId });
+  
+      if (!user || !toFollow) {
+        return res.status(404).send("User not found");
+      }
+  
+      const isFollowingUser =
+        user.following.length > 0 &&
+        user.following.filter(
+          (following) => following.user.toString() === followUserId
+        ).length > 0;
+  
+      if (isFollowingUser) {
+        return res.status(401).send("User Already Followed");
+      }
+  
+      await user.following.unshift({ user: followUserId });
+      await user.save();
+  
+      await toFollow.followers.unshift({ user: userId });
+      await toFollow.save();
+  
+      await newFollowerAlert(userId, followUserId);
+  
+      return res.status(200).send("Updated");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send("Server Error");
+    }
+  });
+  
   
   
   
