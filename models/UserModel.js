@@ -13,4 +13,14 @@ const UserSchema = new Schema({
   dpLink: { type: String },
 
   newMessageAlert: { type: Boolean, default: true },
+
+  unreadMsg: { type: Boolean, default: false },
+
+  unreadNotification: { type: Boolean, default: false },
+
+  role: { type: String, default: "user", enum: ["user", "root"] },
+
+  resetToken: { type: String },
+
+  expireToken: { type: Date },
 });
