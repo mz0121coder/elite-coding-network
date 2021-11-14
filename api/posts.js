@@ -202,4 +202,44 @@ router.post("/like/:postId", authMiddleware, async (req, res) => {
       return res.status(500).send(`Server error`);
     }
   });
+
+  // UNLIKE A POST
+
+router.put("/unlike/:postId", authMiddleware, async (req, res) => {
+    try {
+      const { postId } = req.params;
+      const { userId } = req;
+  
+      const post = await PostModel.findById(postId);
+      if (!post) {
+        return res.status(404).send("No Post found");
+      }
+  
+      const isLiked =
+        post.likes.filter((like) => like.user.toString() === userId).length === 0;
+  
+      if (isLiked) {
+        return res.status(401).send("Post not liked before");
+      }
+  
+      const index = post.likes
+        .map((like) => like.user.toString())
+        .indexOf(userId);
+  
+      await post.likes.splice(index, 1);
+  
+      await post.save();
+  
+      if (post.user.toString() !== userId) {
+        await deleteLikeAlert(userId, postId, post.user.toString());
+      }
+  
+      return res.status(200).send("Post Unliked");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send(`Server error`);
+    }
+  });
+  
+  
   
