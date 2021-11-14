@@ -58,3 +58,42 @@ router.post("/", async (req, res) => {
     }
   });
   
+  // VERIFY THE TOKEN AND RESET THE PASSWORD IN DB
+
+router.post("/token", async (req, res) => {
+    try {
+      const { token, password } = req.body;
+  
+      if (!token) {
+        return res.status(401).send("Unauthorized");
+      }
+  
+      if (password.length < 6)
+        return res.status(401).send("Password must be at least 6 characters");
+  
+      const user = await UserModel.findOne({ resetToken: token });
+  
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+  
+      if (Date.now() > user.expireToken) {
+        return res.status(401).send("Token expired.Generate new one");
+      }
+  
+      user.password = await bcrypt.hash(password, 10);
+  
+      user.resetToken = "";
+      user.expireToken = undefined;
+  
+      await user.save();
+  
+      return res.status(200).send("Password updated");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send("Server Error");
+    }
+  });
+  
+  module.exports = router;
+  
