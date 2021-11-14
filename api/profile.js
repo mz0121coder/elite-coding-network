@@ -185,6 +185,47 @@ router.put("/unfollow/:unfollowUserId", authMiddleware, async (req, res) => {
     }
   });
   
+  // UPDATE PROFILE
+router.post("/update", authMiddleware, async (req, res) => {
+    try {
+      const { userId } = req;
+  
+      const { bio, github, at, connectdevelop, linkify, dpLink } = req.body;
+  
+      let profileSections = {};
+      profileSections.user = userId;
+  
+      profileSections.bio = bio;
+  
+      profileSections.social = {};
+  
+      if (github) profileSections.social.github = github;
+  
+      if (at) profileSections.social.at = at;
+  
+      if (linkify) profileSections.social.linkify = linkify;
+  
+      if (connectdevelop) profileSections.social.connectdevelop = connectdevelop;
+  
+      await ProfileModel.findOneAndUpdate(
+        { user: userId },
+        { $set: profileSections },
+        { new: true }
+      );
+  
+      if (dpLink) {
+        const user = await UserModel.findById(userId);
+        user.dpLink = dpLink;
+        await user.save();
+      }
+  
+      return res.status(200).send("Success");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send("Server Error");
+    }
+  });
+  
   
   
   
