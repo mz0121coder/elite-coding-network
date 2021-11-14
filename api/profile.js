@@ -63,5 +63,22 @@ router.get(`/posts/:username`, authMiddleware, async (req, res) => {
       return res.status(500).send("Server Error");
     }
   });
+
+  // GET FOLLOWERS OF USER
+router.get("/followers/:userId", authMiddleware, async (req, res) => {
+    try {
+      const { userId } = req.params;
+  
+      const user = await FollowerModel.findOne({ user: userId }).populate(
+        "followers.user"
+      );
+  
+      return res.json(user.followers);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send("Server Error");
+    }
+  });
+  
   
   
