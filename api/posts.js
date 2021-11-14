@@ -240,6 +240,50 @@ router.put("/unlike/:postId", authMiddleware, async (req, res) => {
       return res.status(500).send(`Server error`);
     }
   });
+
+  // CREATE A COMMENT
+
+router.post("/comment/:postId", authMiddleware, async (req, res) => {
+    try {
+      const { postId } = req.params;
+  
+      const { userId } = req;
+      const { text } = req.body;
+  
+      if (text.length < 1)
+        return res.status(401).send("Comment should be at least 1 character");
+  
+      const post = await PostModel.findById(postId);
+  
+      if (!post) return res.status(404).send("Post not found");
+  
+      const newComment = {
+        _id: uuid(),
+        text,
+        user: userId,
+        date: Date.now(),
+      };
+  
+      await post.comments.unshift(newComment);
+      await post.save();
+  
+      if (post.user.toString() !== userId) {
+        await newCommentAlert(
+          postId,
+          newComment._id,
+          userId,
+          post.user.toString(),
+          text
+        );
+      }
+  
+      return res.status(200).json(newComment._id);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send(`Server error`);
+    }
+  });
+  
   
   
   
