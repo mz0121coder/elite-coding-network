@@ -15,3 +15,46 @@ const options = {
 
 const transporter = nodemailer.createTransport(sendGridTransport(options));
 
+// CHECK USER EXISTS AND SEND EMAIL FOR RESET PASSWORD
+router.post("/", async (req, res) => {
+    try {
+      const { email } = req.body;
+  
+      if (!isEmail(email)) {
+        return res.status(401).send("Invalid Email");
+      }
+  
+      const user = await UserModel.findOne({ email: email.toLowerCase() });
+  
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+  
+      const token = crypto.randomBytes(32).toString("hex");
+  
+      user.resetToken = token;
+      user.expireToken = Date.now() + 3600000;
+  
+      await user.save();
+  
+      const href = `${mainUrl}/reset/${token}`;
+  
+      const mailConfig = {
+        to: user.email,
+        from: "elite-coding-network@outlook.com",
+        subject: "Hi there! Password reset request",
+        html: `<p>Hey ${user.name
+          .split(" ")[0]
+          .toString()}, There was a request for password reset. <a href=${href}>Click this link to reset the password </a>   </p>
+        <p>This token is valid for only 1 hour.</p>`,
+      };
+  
+      transporter.sendMail(mailConfig, (err, info) => err && console.log(err));
+  
+      return res.status(200).send("Email sent successfully");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send("Server Error");
+    }
+  });
+  
