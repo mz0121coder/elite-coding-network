@@ -12,3 +12,22 @@ const userPng =
   "https://res.cloudinary.com/dg997wl2l/image/upload/v1636133790/user_default_y3bzvv.png";
 
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
+
+router.get("/:username", async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    if (username.length < 1) return res.status(401).send("Invalid");
+
+    if (!regexUserName.test(username)) return res.status(401).send("Invalid");
+
+    const user = await UserModel.findOne({ username: username.toLowerCase() });
+
+    if (user) return res.status(401).send("Username already taken");
+
+    return res.status(200).send("Available");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error`);
+  }
+});
