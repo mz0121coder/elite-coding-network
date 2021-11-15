@@ -63,7 +63,7 @@ try {
     if (user) {
       return res.status(401).send("Username already taken");
     }
-    
+
     user = new UserModel({
         name,
         email: email.toLowerCase(),
@@ -75,5 +75,24 @@ try {
       user.password = await bcrypt.hash(password, 10);
       await user.save();
   
+    let profileSections = {};
+    profileSections.user = user._id;
+
+    profileSections.bio = bio;
+
+    profileSections.social = {};
+    if (github) profileSections.social.github = github;
+    if (at) profileSections.social.at = at;
+    if (linkify) profileSections.social.linkify = linkify;
+    if (connectdevelop) profileSections.social.connectdevelop = connectdevelop;
+
+    await new ProfileModel(profileSections).save();
+    await new FollowerModel({
+      user: user._id,
+      followers: [],
+      following: [],
+    }).save();
+    await new NotificationModel({ user: user._id, notifications: [] }).save();
+    await new ChatModel({ user: user._id, chats: [] }).save();
 
     
