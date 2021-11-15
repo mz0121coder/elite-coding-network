@@ -31,3 +31,17 @@ router.get("/:username", async (req, res) => {
     return res.status(500).send(`Server error`);
   }
 });
+
+router.post("/", async (req, res) => {
+  const {
+    name,
+    email,
+    username,
+    password,
+    bio,
+    github,
+    at,
+    connectdevelop,
+    linkify,
+  } = req.body.user;
+});
