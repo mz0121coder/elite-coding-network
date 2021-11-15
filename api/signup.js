@@ -44,15 +44,14 @@ router.post("/", async (req, res) => {
     connectdevelop,
     linkify,
   } = req.body.user;
-});
 
-if (!isEmail(email)) return res.status(401).send("Invalid Email");
+  if (!isEmail(email)) return res.status(401).send("Invalid Email");
 
-if (password.length < 6) {
-  return res.status(401).send("Password must be at least 6 characters");
-}
+  if (password.length < 6) {
+    return res.status(401).send("Password must be at least 6 characters");
+  }
 
-try {
+  try {
     let user;
     user = await UserModel.findOne({ email: email.toLowerCase() });
     if (user) {
@@ -65,16 +64,16 @@ try {
     }
 
     user = new UserModel({
-        name,
-        email: email.toLowerCase(),
-        username: username.toLowerCase(),
-        password,
-        dpLink: req.body.dpLink || userPng,
-      });
-  
-      user.password = await bcrypt.hash(password, 10);
-      await user.save();
-  
+      name,
+      email: email.toLowerCase(),
+      username: username.toLowerCase(),
+      password,
+      dpLink: req.body.dpLink || userPng,
+    });
+
+    user.password = await bcrypt.hash(password, 10);
+    await user.save();
+
     let profileSections = {};
     profileSections.user = user._id;
 
@@ -95,4 +94,20 @@ try {
     await new NotificationModel({ user: user._id, notifications: [] }).save();
     await new ChatModel({ user: user._id, chats: [] }).save();
 
-    
+    const payload = { userId: user._id };
+    jwt.sign(
+      payload,
+      process.env.jwtSecret,
+      { expiresIn: "2d" },
+      (err, token) => {
+        if (err) throw err;
+        res.status(200).json(token);
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send(`Server error`);
+  }
+});
+
+module.exports = router;
