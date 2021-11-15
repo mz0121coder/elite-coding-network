@@ -51,3 +51,18 @@ if (!isEmail(email)) return res.status(401).send("Invalid Email");
 if (password.length < 6) {
   return res.status(401).send("Password must be at least 6 characters");
 }
+
+try {
+    let user;
+    user = await UserModel.findOne({ email: email.toLowerCase() });
+    if (user) {
+      return res.status(401).send("User already registered");
+    }
+
+    user = await UserModel.findOne({ username: username.toLowerCase() });
+    if (user) {
+      return res.status(401).send("Username already taken");
+    }
+
+
+    
