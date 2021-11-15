@@ -63,6 +63,17 @@ try {
     if (user) {
       return res.status(401).send("Username already taken");
     }
-
+    
+    user = new UserModel({
+        name,
+        email: email.toLowerCase(),
+        username: username.toLowerCase(),
+        password,
+        dpLink: req.body.dpLink || userPng,
+      });
+  
+      user.password = await bcrypt.hash(password, 10);
+      await user.save();
+  
 
     
