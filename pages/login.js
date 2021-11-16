@@ -41,3 +41,68 @@ function Login() {
         if (userEmail) setUser((prev) => ({ ...prev, email: userEmail }));
       }, []);
      
+      return (
+        <>
+          <HeaderMessage />
+          <Form
+            loading={formLoading}
+            error={errorMsg !== null}
+            onSubmit={handleSubmit}
+          >
+            <Message
+              error
+              header="Oops!"
+              content={errorMsg}
+              onDismiss={() => setErrorMsg(null)}
+            />
+    
+            <Segment>
+              <Form.Input
+                required
+                label="Email"
+                placeholder="Email"
+                name="email"
+                value={email}
+                onChange={handleChange}
+                fluid
+                icon="envelope"
+                iconPosition="left"
+                type="email"
+              />
+    
+              <Form.Input
+                label="Password"
+                placeholder="Password"
+                name="password"
+                value={password}
+                onChange={handleChange}
+                fluid
+                icon={{
+                  name: "eye",
+                  circular: true,
+                  link: true,
+                  onClick: () => setShowPassword(!showPassword),
+                }}
+                iconPosition="left"
+                type={showPassword ? "text" : "password"}
+                required
+              />
+    
+              <Divider hidden />
+              <Button
+                icon="signup"
+                content="Login"
+                type="submit"
+                color="orange"
+                disabled={submitDisabled}
+              />
+            </Segment>
+          </Form>
+    
+          <FooterMessage />
+        </>
+      );
+    }
+    
+    export default Login;
+    
