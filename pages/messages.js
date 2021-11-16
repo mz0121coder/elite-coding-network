@@ -96,5 +96,29 @@ function Messages({ chatsData, user }) {
       });
     }
   };
+
+    // Confirming msg is sent and receving the messages useEffect
+    useEffect(() => {
+        if (socket.current) {
+          socket.current.on("msgSent", ({ newMsg }) => {
+            if (newMsg.receiver === openChatId.current) {
+              setMessages((prev) => [...prev, newMsg]);
+    
+              setChats((prev) => {
+                const previousChat = prev.find(
+                  (chat) => chat.msgsWithUser === newMsg.receiver
+                );
+                previousChat.lastMessage = newMsg.msg;
+                previousChat.date = newMsg.date;
+    
+                return [...prev];
+              });
+            }
+          });
+    
+          socket.current.on("newMsgReceived", async ({ newMsg }) => {
+            let senderName;
+    
+    
   
 
