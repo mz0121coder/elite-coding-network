@@ -48,4 +48,71 @@ function Signup() {
       const [highlight, setHighlight] = useState(false);
       const inputRef = useRef();
     
+      useEffect(() => {
+        const isUser = Object.values({ name, email, password, bio }).every((item) =>
+          Boolean(item)
+        );
+        isUser ? setSubmitDisabled(false) : setSubmitDisabled(true);
+      }, [user]);
+    
+      const checkUsername = async () => {
+        setUsernameLoading(true);
+        try {
+          cancel && cancel();
+    
+          const CancelToken = axios.CancelToken;
+    
+          const res = await axios.get(`${mainUrl}/api/signup/${username}`, {
+            cancelToken: new CancelToken((canceler) => {
+              cancel = canceler;
+            }),
+          });
+    
+          if (errorMsg !== null) setErrorMsg(null);
+    
+          if (res.data === "Available") {
+            setUsernameAvailable(true);
+            setUser((prev) => ({ ...prev, username }));
+          }
+        } catch (error) {
+          setErrorMsg("Username Not Available");
+          setUsernameAvailable(false);
+        }
+        setUsernameLoading(false);
+      };
+    
+      useEffect(() => {
+        const isUser = Object.values({ name, email, password, bio }).every((item) =>
+          Boolean(item)
+        );
+        isUser ? setSubmitDisabled(false) : setSubmitDisabled(true);
+      }, [user]);
+    
+      const checkUsername = async () => {
+        setUsernameLoading(true);
+        try {
+          cancel && cancel();
+    
+          const CancelToken = axios.CancelToken;
+    
+          const res = await axios.get(`${mainUrl}/api/signup/${username}`, {
+            cancelToken: new CancelToken((canceler) => {
+              cancel = canceler;
+            }),
+          });
+    
+          if (errorMsg !== null) setErrorMsg(null);
+    
+          if (res.data === "Available") {
+            setUsernameAvailable(true);
+            setUser((prev) => ({ ...prev, username }));
+          }
+        } catch (error) {
+          setErrorMsg("Username Not Available");
+          setUsernameAvailable(false);
+        }
+        setUsernameLoading(false);
+      };
+    
+        
   
