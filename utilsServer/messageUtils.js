@@ -98,7 +98,11 @@ const loadMessages =async (userId, msgsWithUser => {
                 (chat) => chat.msgsWithUser.toString() === msgsWithUser
             );
 
-            if (!chat) return
+            if (!chat) return;
+
+            const msgToDelete = chat.messages.find(
+                (message) => message._id.toString() === messageId
+            );
         }
     })
    }
