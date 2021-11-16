@@ -214,6 +214,86 @@ function Messages({ chatsData, user }) {
       alert("Error deleting chat");
     }
   };
+
+  return (
+    <>
+      <Segment padded basic size="large" style={{ marginTop: "5px" }}>
+        <Header
+          icon="home"
+          content="Go Back!"
+          onClick={() => router.push("/")}
+          style={{ cursor: "pointer" }}
+        />
+        <Divider hidden />
+
+        <div style={{ marginBottom: "10px" }}>
+          <SearchChat chats={chats} setChats={setChats} />
+        </div>
+
+        {chats.length > 0 ? (
+          <>
+            <Grid stackable>
+              <Grid.Column width={4}>
+                <Comment.Group size="big">
+                  <Segment
+                    raised
+                    style={{ overflow: "auto", maxHeight: "32rem" }}
+                  >
+                    {chats.map((chat, i) => (
+                      <Chat
+                        key={i}
+                        chat={chat}
+                        activeChats={activeChats}
+                        deleteChat={deleteChat}
+                      />
+                    ))}
+                  </Segment>
+                </Comment.Group>
+              </Grid.Column>
+
+              <Grid.Column width={12}>
+                {router.query.message && (
+                  <>
+                    <div
+                      style={{
+                        overflow: "auto",
+                        overflowX: "hidden",
+                        maxHeight: "35rem",
+                        height: "35rem",
+                        backgroundColor: "whitesmoke",
+                      }}
+                    >
+                      <div style={{ position: "sticky", top: "0" }}>
+                        <Banner bannerInfo={bannerInfo} />
+                      </div>
+
+                      {messages.length > 0 &&
+                        messages.map((message, i) => (
+                          <Message
+                            divRef={divRef}
+                            key={i}
+                            bannerPic={bannerInfo.dpLink}
+                            message={message}
+                            user={user}
+                            deleteMsg={deleteMsg}
+                          />
+                        ))}
+                    </div>
+
+                    <MsgInput sendMsg={sendMsg} />
+                  </>
+                )}
+              </Grid.Column>
+            </Grid>
+          </>
+        ) : (
+          <NoMsg />
+        )}
+      </Segment>
+    </>
+  );
+}
+
   
   
     
