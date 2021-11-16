@@ -113,6 +113,28 @@ function Signup() {
         }
         setUsernameLoading(false);
       };
+
+      useEffect(() => {
+        username === "" ? setUsernameAvailable(false) : checkUsername();
+      }, [username]);
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        setFormLoading(true);
+    
+        let dpLink;
+        if (media !== null) {
+          dpLink = await uploadPic(media);
+        }
+    
+        if (media !== null && !dpLink) {
+          setFormLoading(false);
+          return setErrorMsg("Error Uploading Image");
+        }
+    
+        await registerUser(user, dpLink, setErrorMsg, setFormLoading);
+      };
+    
     
         
   
