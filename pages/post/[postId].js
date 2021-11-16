@@ -122,3 +122,20 @@ function PostPage({ post, errorLoading, user }) {
     </Container>
   );
 }
+
+PostPage.getInitialProps = async (ctx) => {
+  try {
+    const { postId } = ctx.query;
+    const { token } = parseCookies(ctx);
+
+    const res = await axios.get(`${mainUrl}/api/posts/${postId}`, {
+      headers: { Authorization: token },
+    });
+
+    return { post: res.data };
+  } catch (error) {
+    return { errorLoading: true };
+  }
+};
+
+export default PostPage;
