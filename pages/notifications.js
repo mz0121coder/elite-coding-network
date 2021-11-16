@@ -75,4 +75,21 @@ function Notifications({ notifications, errorLoading, user, userFollowers }) {
       </>
     );
   }
+
+  Notifications.getInitialProps = async (ctx) => {
+    try {
+      const { token } = parseCookies(ctx);
+  
+      const res = await axios.get(`${mainUrl}/api/notifications`, {
+        headers: { Authorization: token },
+      });
+  
+      return { notifications: res.data };
+    } catch (error) {
+      return { errorLoading: true };
+    }
+  };
+  
+  export default Notifications;
+  
   
