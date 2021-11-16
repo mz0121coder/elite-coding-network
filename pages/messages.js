@@ -157,6 +157,63 @@ function Messages({ chatsData, user }) {
                 ];
               });
             }
+
+            
+          //IF NO PREVIOUS CHAT WITH THE SENDER
+          else {
+            const { name, dpLink } = await getUserInfo(newMsg.sender);
+            senderName = name;
+
+            const newChat = {
+              msgsWithUser: newMsg.sender,
+              name,
+              dpLink,
+              lastMessage: newMsg.msg,
+              date: newMsg.date,
+            };
+            setChats((prev) => [newChat, ...prev]);
+          }
+        }
+
+        newMsgSound(senderName);
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    messages.length > 0 && scrollDivToBottom(divRef);
+  }, [messages]);
+
+  const deleteMsg = (messageId) => {
+    if (socket.current) {
+      socket.current.emit("deleteMsg", {
+        userId: user._id,
+        msgsWithUser: openChatId.current,
+        messageId,
+      });
+
+      socket.current.on("msgDeleted", () => {
+        setMessages((prev) =>
+          prev.filter((message) => message._id !== messageId)
+        );
+      });
+    }
+  };
+
+  const deleteChat = async (msgsWithUser) => {
+    try {
+      await axios.delete(`${mainUrl}/api/chats/${msgsWithUser}`, {
+        headers: { Authorization: cookie.get("token") },
+      });
+
+      setChats((prev) =>
+        prev.filter((chat) => chat.msgsWithUser !== msgsWithUser)
+      );
+      router.push("/messages", undefined, { shallow: true });
+    } catch (error) {
+      alert("Error deleting chat");
+    }
+  };
   
   
     
