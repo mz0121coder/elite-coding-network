@@ -119,6 +119,46 @@ function Messages({ chatsData, user }) {
           socket.current.on("newMsgReceived", async ({ newMsg }) => {
             let senderName;
     
+                    // WHEN CHAT WITH SENDER IS CURRENTLY OPENED INSIDE YOUR BROWSER
+        if (newMsg.sender === openChatId.current) {
+            setMessages((prev) => [...prev, newMsg]);
+  
+            setChats((prev) => {
+              const previousChat = prev.find(
+                (chat) => chat.msgsWithUser === newMsg.sender
+              );
+              previousChat.lastMessage = newMsg.msg;
+              previousChat.date = newMsg.date;
+  
+              senderName = previousChat.name;
+  
+              return [...prev];
+            });
+          }
+          //
+          else {
+            const ifPreviouslyMessaged =
+              chats.filter((chat) => chat.msgsWithUser === newMsg.sender).length >
+              0;
+  
+            if (ifPreviouslyMessaged) {
+              setChats((prev) => {
+                const previousChat = prev.find(
+                  (chat) => chat.msgsWithUser === newMsg.sender
+                );
+                previousChat.lastMessage = newMsg.msg;
+                previousChat.date = newMsg.date;
+  
+                senderName = previousChat.name;
+  
+                return [
+                  previousChat,
+                  ...prev.filter((chat) => chat.msgsWithUser !== newMsg.sender),
+                ];
+              });
+            }
+  
+  
     
   
 
