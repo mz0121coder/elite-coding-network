@@ -17,3 +17,15 @@ import { likePost } from "../../utils/postMethods";
 import calcTime from "../../utils/calcTime";
 import mainUrl from "../../utils/mainUrl";
 import { NoPostListed } from "../../components/Layout/NoData";
+
+function PostPage({ post, errorLoading, user }) {
+    if (errorLoading) {
+      return <NoPostListed />;
+    }
+  
+    const [likes, setLikes] = useState(post.likes);
+  
+    const isLiked =
+      likes.length > 0 &&
+      likes.filter((like) => like.user === user._id).length > 0;
+  
