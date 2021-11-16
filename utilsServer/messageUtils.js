@@ -21,7 +21,7 @@ const loadMessages =async (userId, msgsWithUser => {
         console.log (error);
         return { error };
     } 
-    };
+});
 
    const sendMsg = async (userId, msgSendToUserId, msg) => {
        try {
@@ -103,12 +103,25 @@ const loadMessages =async (userId, msgsWithUser => {
             const msgToDelete = chat.messages.find(
                 (message) => message._id.toString() === messageId
             );
-        }
-    })
-   }
-           )
 
+            if (!msgToDelete) return;
 
-       }
-   }
-})
+            if (msgToDelete.sender.toString() !== userId) {
+                return;
+            }
+
+            const indexOf = chat.messages
+            .map(( message) => message._id.toString())
+            .indexOf(msgToDelete.id.toString());
+
+            await chat.messages.splice(indexOf, 1);
+
+            await user.save ();
+
+            return { success:true };
+            }catch (error) {
+                console.log(error);
+            }
+    });
+   module.exports = {loadMessages, sendMsg, setMsgToUnread, deleteMsg};
+           
