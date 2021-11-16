@@ -54,5 +54,47 @@ function Messages({ chatsData, user }) {
         }
       }
     }, []);
+
+    // LOAD MESSAGES useEffect
+  useEffect(() => {
+    const loadMessages = () => {
+      socket.current.emit("loadMessages", {
+        userId: user._id,
+        msgsWithUser: router.query.message,
+      });
+
+      socket.current.on("messagesLoaded", async ({ chat }) => {
+        setMessages(chat.messages);
+        setBannerInfo({
+          name: chat.msgsWithUser.name,
+          dpLink: chat.msgsWithUser.dpLink,
+        });
+
+        openChatId.current = chat.msgsWithUser._id;
+        divRef.current && scrollDivToBottom(divRef);
+      });
+
+      socket.current.on("noChatFound", async () => {
+        const { name, dpLink } = await getUserInfo(router.query.message);
+
+        setBannerInfo({ name, dpLink });
+        setMessages([]);
+
+        openChatId.current = router.query.message;
+      });
+    };
+
+    if (socket.current && router.query.message) loadMessages();
+  }, [router.query.message]);
+
+  const sendMsg = (msg) => {
+    if (socket.current) {
+      socket.current.emit("sendNewMsg", {
+        userId: user._id,
+        msgSendToUserId: openChatId.current,
+        msg,
+      });
+    }
+  };
   
 
