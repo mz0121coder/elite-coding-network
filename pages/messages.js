@@ -294,6 +294,23 @@ function Messages({ chatsData, user }) {
   );
 }
 
+Messages.getInitialProps = async (ctx) => {
+    try {
+      const { token } = parseCookies(ctx);
+  
+      const res = await axios.get(`${mainUrl}/api/chats`, {
+        headers: { Authorization: token },
+      });
+  
+      return { chatsData: res.data };
+    } catch (error) {
+      return { errorLoading: true };
+    }
+  };
+  
+  export default Messages;
+  
+
   
   
     
