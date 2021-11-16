@@ -22,4 +22,30 @@ function Signup() {
       linkify: "",
     });
   
+    const handleChange = (e) => {
+        const { name, value, files } = e.target;
+    
+        if (name === "media") {
+          setMedia(files[0]);
+          setMediaPreview(URL.createObjectURL(files[0]));
+        }
+    
+        setUser((prev) => ({ ...prev, [name]: value }));
+      };
+    
+      const [displayLinks, setDisplayLinks] = useState(false);
+      const [showPassword, setShowPassword] = useState(false);
+      const [errorMsg, setErrorMsg] = useState(null);
+      const [formLoading, setFormLoading] = useState(false);
+      const [submitDisabled, setSubmitDisabled] = useState(true);
+    
+      const [username, setUsername] = useState("");
+      const [usernameLoading, setUsernameLoading] = useState(false);
+      const [usernameAvailable, setUsernameAvailable] = useState(false);
+    
+      const [media, setMedia] = useState(null);
+      const [mediaPreview, setMediaPreview] = useState(null);
+      const [highlight, setHighlight] = useState(false);
+      const inputRef = useRef();
+    
   
