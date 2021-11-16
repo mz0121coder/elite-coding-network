@@ -15,3 +15,19 @@ import getUserInfo from "../utils/getUserInfo";
 import newMsgSound from "../utils/newMsgSound";
 import cookie from "js-cookie";
 
+const scrollDivToBottom = (divRef) =>
+  divRef.current !== null &&
+  divRef.current.scrollIntoView({ behaviour: "smooth" });
+
+function Messages({ chatsData, user }) {
+  const [chats, setChats] = useState(chatsData || []);
+  const router = useRouter();
+
+  const socket = useRef();
+  const [activeChats, setactiveChats] = useState([]);
+
+  const [messages, setMessages] = useState([]);
+  const [bannerInfo, setBannerInfo] = useState({ name: "", dpLink: "" });
+
+  const divRef = useRef();
+
