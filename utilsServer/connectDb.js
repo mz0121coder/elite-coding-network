@@ -1,8 +1,8 @@
 const mongoose =  require ("mongoose");
 
-async await connect() {  //tutor session
+async function connectDB() {  //tutor session
     try {
-    await useNewParser: true,
+    await mongoose.connect (process.env.MONGO_URI, {
     useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex: true,
@@ -14,7 +14,6 @@ async await connect() {  //tutor session
     process.exit (1);
 }
 
-
 }
 
-module.exports = connectDB;
+module.exports = connectDb;
