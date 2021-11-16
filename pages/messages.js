@@ -31,3 +31,28 @@ function Messages({ chatsData, user }) {
 
   const divRef = useRef();
 
+    // This ref is for persisting the state of query string in url throughout re-renders. This ref is the value of query string inside url
+    const openChatId = useRef("");
+
+    //CONNECTION useEffect
+    useEffect(() => {
+      if (!socket.current) {
+        socket.current = io(mainUrl);
+      }
+  
+      if (socket.current) {
+        socket.current.emit("join", { userId: user._id });
+  
+        socket.current.on("activeChats", ({ users }) => {
+          users.length > 0 && setactiveChats(users);
+        });
+  
+        if (chats.length > 0 && !router.query.message) {
+          router.push(`/messages?message=${chats[0].msgsWithUser}`, undefined, {
+            shallow: true,
+          });
+        }
+      }
+    }, []);
+  
+
