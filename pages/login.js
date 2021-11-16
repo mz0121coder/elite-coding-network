@@ -22,4 +22,22 @@ function Login() {
       setUser((prev) => ({ ...prev, [name]: value }));
     };
   
-  
+    useEffect(() => {
+        const isUser = Object.values({ email, password }).every((item) =>
+          Boolean(item)
+        );
+        isUser ? setSubmitDisabled(false) : setSubmitDisabled(true);
+      }, [user]);
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        await loginUser(user, setErrorMsg, setFormLoading);
+      };
+    
+      useEffect(() => {
+        document.title = "Welcome Back";
+        const userEmail = cookie.get("userEmail");
+        if (userEmail) setUser((prev) => ({ ...prev, email: userEmail }));
+      }, []);
+     
