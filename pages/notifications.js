@@ -9,3 +9,19 @@ import LikeAlert from "../components/Notifications/LikeAlert";
 import CommentAlert from "../components/Notifications/CommentAlert";
 import FollowerAlert from "../components/Notifications/FollowerAlert";
 
+function Notifications({ notifications, errorLoading, user, userFollowers }) {
+    const [loggedUserFollowers, setUserFollowers] = useState(userFollowers);
+  
+    useEffect(() => {
+      const notificationRead = async () => {
+        try {
+          await axios.post(
+            `${mainUrl}/api/notifications`,
+            {},
+            { headers: { Authorization: cookie.get("token") } }
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
