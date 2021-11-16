@@ -22,3 +22,29 @@ function TokenPage() {
       setNewPassword((prev) => ({ ...prev, [name]: value }));
     };
   
+    useEffect(() => {
+        errorMsg !== null && setTimeout(() => setErrorMsg(null), 5000);
+      }, [errorMsg]);
+    
+      const resetPassword = async (e) => {
+        e.preventDefault();
+    
+        setLoading(true);
+        try {
+          if (field1 !== field2) {
+            return setErrorMsg("Passwords do not match");
+          }
+    
+          await axios.post(`${mainUrl}/api/reset/token`, {
+            password: field1,
+            token: router.query.token,
+          });
+    
+          setSuccess(true);
+        } catch (error) {
+          setErrorMsg(catchErrors(error));
+        }
+    
+        setLoading(false);
+      };
+    
