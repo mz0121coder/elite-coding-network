@@ -113,8 +113,11 @@ const newCommentAlert = async (
                 }
             )
         }
+
+        return;
+    } catch (error){
+    console.error (error);
     }
-    )
 }
 
 );
