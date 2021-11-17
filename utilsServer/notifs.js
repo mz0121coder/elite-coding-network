@@ -80,7 +80,41 @@ const newCommentAlert = async (
             text,
             date: Date.now(),
         }
+
+    await userToNotify.notifications.unshift(newAlert);
+    
+    await userToNotify.save ():
+
+    await setAlertToUnread (userToNotifyId);
+    return;
+    } catch (error) {
+        console.error(error);
     }
+    };
+
+    const deleteCommentAlert = async (
+        postId,
+        commentId,
+        userId,
+        userToNotifyId
+    )  => {
+        try {
+            await  NotificationModel.findOneAndUpdate (
+                {user: userToNotifyId},
+                {
+                    $pull: {
+                        notifications: {
+                            type: "new comment",
+                            user: userId,
+                            post: postId,
+                            commentId: commentId,
+                        }
+                    }
+                }
+            )
+        }
+    }
+    )
 }
 
 );
