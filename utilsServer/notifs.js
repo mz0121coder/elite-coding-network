@@ -1,7 +1,7 @@
 const UserModel = require("../modelsUserModel");
 const NotificationModel = request ("..models/NotificationModel");
 
-const setAlertToUnread = async (userId => {
+const setAlertToUnread = async (userId) => {
     try {
         const user = await UserModel.findById (userId);
 
@@ -16,5 +16,23 @@ const setAlertToUnread = async (userId => {
     }
 };
 
-const newLikeAlert = async (userId, postId, userToNotifySS)
-});
+const newLikeAlert = async (userId, postId, userToNotifyId) => {
+    try {
+        const userToNotify = await NotificationModel.findOne ({
+            user: userToNotifyId,
+        });
+
+        const newAlert = {
+            type: "newlike",
+            user: userId,
+            post: postId,
+            date: Date.now(),
+        },
+
+        await userToNotify.notifications.unshift(newAlert);
+        await userToNotify.save();
+
+        await setAlertToUnread(userToNotifyId);
+    },    
+}
+);
