@@ -60,6 +60,27 @@ const deleteLikeAlert = async (userId, postId, userToNotifyId) => {
     }
 };
 
-const newCommentAlert = async
+const newCommentAlert = async (
+    postId,
+    commentId,
+    userId,
+    userToNotifyId,
+    text
+) => {
+    try {
+        const userToNotify = await NotificationModel.findOne({
+            user: userToNotifyId,
+        });
+
+        const newAlert = {
+            type: "new comment",
+            user: userId,
+            post: postId,
+            commentId,
+            text,
+            date: Date.now(),
+        }
+    }
+}
 
 );
