@@ -33,6 +33,11 @@ const newLikeAlert = async (userId, postId, userToNotifyId) => {
         await userToNotify.save();
 
         await setAlertToUnread(userToNotifyId);
-    },    
+        return;
+    } catch (error) {
+        console.error(error);
+    }
+    },
+        
 }
 );
