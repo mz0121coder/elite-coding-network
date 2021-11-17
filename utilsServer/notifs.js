@@ -38,6 +38,24 @@ const newLikeAlert = async (userId, postId, userToNotifyId) => {
         console.error(error);
     }
     },
-        
+
+const deleteLikeAlert = async (userId, postId, userToNotifyId) => {
+    try {
+        await NotificationModel.findOneAndUpdate(
+            { user: userToNotifyId},
+            {
+                $pull: {
+                    notifications : {
+                        type: "newLike",
+                        user: userId,
+                        post: postId,
+                    },
+                },
+            }
+        )
+    }
+}    
+
+
 }
 );
