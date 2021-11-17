@@ -52,10 +52,14 @@ const deleteLikeAlert = async (userId, postId, userToNotifyId) => {
                     },
                 },
             }
-        )
+        );
+
+        return;
+    } catch (error) {
+        console.error(error);
     }
-}    
+};
 
+const newCommentAlert = async
 
-}
 );
