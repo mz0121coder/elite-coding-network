@@ -26,7 +26,7 @@ const newLikeAlert = async (userId, postId, userToNotifyId) => {
             type: "newlike",
             user: userId,
             post: postId,
-            date: Date.now(),
+            date: _Date.now(),
         },
 
         await userToNotify.notifications.unshift(newAlert);
@@ -79,11 +79,11 @@ const newCommentAlert = async (
             commentId,
             text,
             date: Date.now(),
-        }
+        };
 
     await userToNotify.notifications.unshift(newAlert);
     
-    await userToNotify.save ():
+    await userToNotify.save ();
 
     await setAlertToUnread (userToNotifyId);
     return;
@@ -108,16 +108,62 @@ const newCommentAlert = async (
                             user: userId,
                             post: postId,
                             commentId: commentId,
-                        }
-                    }
-                }
-            )
-        }
+                        },
+                    },
+                },
+            );
 
-        return;
+     return;
     } catch (error){
-    console.error (error);
+     console.error (error);
     }
-}
+};
+
+const newFollowerAlert = async (userId, userToNotifyId) => {
+    try {
+        const user = await NotificationModel.findOne ({ user: userToNotifyId});
+
+        const newAlert = {
+            type: "newFollower",
+            user: userId,
+            date: Date.now(),
+          };
+        
+          await user.notifications.unshift(newAlert);
+
+          await user.save();
+      
+          await setAlertToUnread(userToNotifyId);
+          return;
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      const deleteFollowerAlert = async (userId, userToNotifyId) => {
+          try {
+              await NotificationModel.findOneAndUpdate (
+                  {user:userToNotifyId},
+                  {$pull: {notifications: {type: "newFollower", user:Id}}}
+              );
+          
+          return;
+          }catch (error) {
+              console.error(error);
+          }    
+      };
+
+     // delete alert?? or not add??
+module.exports = {
+    newLikeAlert,
+    deleteLikeAlert,
+    newCommentAlert,
+    deleteCommentAlert,
+    newFollowerAlert,
+    deleteFollowerAlert,
+
+};
+
+    
 
 );
