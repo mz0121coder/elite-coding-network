@@ -29,4 +29,68 @@ function Settings({ newMessageAlert }) {
       
         const [success, setSuccess] = useState(false);
       
-      
+        return (
+            <>
+              {success && (
+                <>
+                  <Message success icon="check circle" header="Updated Successfully" />
+                  <Divider hidden />
+                </>
+              )}
+        
+              <List size="huge" animated>
+                <List.Item>
+                  <List.Icon name="user secret" size="large" verticalAlign="middle" />
+                  <List.Content>
+                    <List.Header
+                      onClick={() => showPasswordFields(!passwordFields)}
+                      as="a"
+                      content="Update Password"
+                    />
+                  </List.Content>
+        
+                  {passwordFields && (
+                    <UpdatePassword
+                      setSuccess={setSuccess}
+                      showPasswordFields={showPasswordFields}
+                    />
+                  )}
+                </List.Item>
+                <Divider />
+        
+                <List.Item>
+                  <List.Icon
+                    name="paper plane outline"
+                    size="large"
+                    verticalAlign="middle"
+                  />
+        
+                  <List.Content>
+                    <List.Header
+                      onClick={() => showNewMessageSettings(!newMessageSettings)}
+                      as="a"
+                      content="Show New Message Popup?"
+                    />
+                  </List.Content>
+        
+                  <div style={{ marginTop: "10px" }}>
+                    Control whether a Popup should appear when there is a New Message or
+                    not.
+                    <br />
+                    <br />
+                    <Checkbox
+                      checked={popupSetting}
+                      toggle
+                      onChange={() =>
+                        toggleMsgAlert(popupSetting, setPopupSetting, setSuccess)
+                      }
+                    />
+                  </div>
+                </List.Item>
+        
+                <Divider />
+              </List>
+            </>
+          );
+        }
+        
