@@ -80,4 +80,52 @@ function ProfileHeader({
                         </List.Item>
                       )}
     
+    {profile.social.connectdevelop && (
+                    <List.Item>
+                      <List.Icon name="connectdevelop" color="blue" />
+                      <List.Content
+                        style={{ color: "blue" }}
+                        content={profile.social.connectdevelop}
+                      />
+                    </List.Item>
+                  )}
+                </List>
+              ) : (
+                <>No Social Media Links </>
+              )}
+            </Grid.Row>
+          </Grid.Column>
+
+          <Grid.Column width={5} stretched style={{ textAlign: "center" }}>
+            <Grid.Row>
+              <Image size="large" avatar src={profile.user.dpLink} />
+            </Grid.Row>
+            <br />
+
+            {!userAccount && (
+              <Button
+                compact
+                loading={loading}
+                disabled={loading}
+                content={isFollowingUser ? "Following" : "Follow"}
+                icon={isFollowingUser ? "check circle" : "add user"}
+                color={isFollowingUser ? "linkify" : "connectdevelop"}
+                onClick={async () => {
+                  setLoading(true);
+                  isFollowingUser
+                    ? await unfollow(profile.user._id, setUserFollowers)
+                    : await follow(profile.user._id, setUserFollowers);
+                  setLoading(false);
+                }}
+              />
+            )}
+          </Grid.Column>
+        </Grid>
+      </Segment>
+    </>
+  );
+}
+
+export default ProfileHeader;
+
       
