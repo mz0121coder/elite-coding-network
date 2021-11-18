@@ -2,8 +2,10 @@ const express = require ("express");
 
 const router = express.Router ();
 
-const UserModel = require ("..models/UserModel");
+const authMiddleware = require ("../middleware/authMiddleware");
 const FollowerModel = require ("../models/FollowerModel");
+const UserModel = require ("..models/UserModel");
+
 
 router.get ("/"), authMiddleware, async (req,res) =>{
     const {userId} =req;
