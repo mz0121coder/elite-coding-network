@@ -94,3 +94,29 @@ function Settings({ newMessageAlert }) {
           );
         }
         
+        const UpdatePassword = ({ setSuccess, showPasswordFields }) => {
+            const [loading, setLoading] = useState(false);
+            const [errorMsg, setError] = useState(null);
+          
+            const [userPasswords, setUserPasswords] = useState({
+              currentPassword: "",
+              newPassword: "",
+            });
+            const [typed, showTyped] = useState({
+              field1: false,
+              field2: false,
+            });
+          
+            const { field1, field2 } = typed;
+          
+            const { currentPassword, newPassword } = userPasswords;
+          
+            const handleChange = (e) => {
+              const { name, value } = e.target;
+              setUserPasswords((prev) => ({ ...prev, [name]: value }));
+            };
+          
+            useEffect(() => {
+              errorMsg && setTimeout(() => setError(null), 5000);
+            }, [errorMsg]);
+          
