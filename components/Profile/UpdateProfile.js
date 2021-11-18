@@ -15,4 +15,24 @@ function UpdateProfile({ Profile }) {
       connectdevelop: (Profile.social && Profile.social.connectdevelop) || "",
     });
   
-    
+    const [errorMsg, setErrorMsg] = useState(null);
+
+    const [loading, setLoading] = useState(false);
+    const [displayLinks, setDisplayLinks] = useState(false);
+  
+    const [highlight, setHighlight] = useState(false);
+    const inputRef = useRef();
+    const [media, setMedia] = useState(null);
+    const [mediaPreview, setMediaPreview] = useState(null);
+  
+    const handleChange = (e) => {
+      const { name, value, files } = e.target;
+  
+      if (name === "media") {
+        setMedia(files[0]);
+        setMediaPreview(URL.createObjectURL(files[0]));
+      }
+      setProfile((prev) => ({ ...prev, [name]: value }));
+    };
+  
+  
