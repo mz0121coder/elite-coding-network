@@ -7,13 +7,13 @@ const likeOrUnlike = async (postId, UserId, like) => {
     try {
         const post = await PostModel.findbyId (postId);
 
-        if (!post) return {error: "No post found"};
+        if (!post) return {error: "OooOops post no longer exists"};
 
         if (like) {
             const isLiked =
             post.likes.filter((like) => like.user.tostring() === userId).length >0;
 
-            if (isLiked) return { error: "Post liked before"};
+            if (isLiked) return { error: "Already liked - you must really it!"};
 
             await post.likes.unshift({ user: userId});
             
@@ -57,7 +57,7 @@ const likeOrUnlike = async (postId, UserId, like) => {
             postByUserId: post.user.toString(),
         };
     } catch (error) {
-        return { error: "Server Error "};
+        return { error: "Server Is Sleeping - try again  "};
     }
 };
 
