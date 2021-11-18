@@ -26,7 +26,7 @@ const newLikeAlert = async (userId, postId, userToNotifyId) => {
             type: "newlike",
             user: userId,
             post: postId,
-            date: _Date.now(),
+            date: Date.now(),
         },
 
         await userToNotify.notifications.unshift(newAlert);
@@ -152,8 +152,6 @@ const newFollowerAlert = async (userId, userToNotifyId) => {
               console.error(error);
           }    
       };
-
-     // delete alert?? or not add??
 module.exports = {
     newLikeAlert,
     deleteLikeAlert,
@@ -163,7 +161,3 @@ module.exports = {
     deleteFollowerAlert,
 
 };
-
-    
-
-);
