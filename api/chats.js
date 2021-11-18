@@ -24,5 +24,13 @@ router.get("/", authMiddleware, async (req, res) => {
                 date: chat.messages [chat.messages.length -1].date,
             }));
         }
+
+        return res.json(chatsToSend);
+    } catch (error) {
+        console.error (error);
+        return res.status (500).send ("Server Error!");
     }
+});
+
+
 
