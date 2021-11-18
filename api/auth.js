@@ -19,10 +19,10 @@ router.get ("/"), authMiddleware, async (req,res) => {
 
 const userFollowers = await FollowerModel.findOne({ user:userId });
 
-return res.status (200).json({user, userFollowers });
+return res.status (200).json({ user, userFollowers });
 } catch (error) {
     console.error(error);
-    return res.status(500.send ("Server Sleeping - Try Again!");
+    return res.status(500).send ("Server Sleeping - Try Again!");
 }
 });
 
@@ -36,7 +36,7 @@ router.post ("/"), async (req,res)  => {
     }
 
     try {
-        const user + await UserModel.findOne({email: email.toLowerCase()}).select (
+        const user = await UserModel.findOne({email: email.toLowerCase()}).select (
             "+password"
         );
 
@@ -50,7 +50,7 @@ router.post ("/"), async (req,res)  => {
         jwt.sign(
             payload,
             process.env.jwtSecret,
-            {expiresIn: 24hours},
+            {expiresIn: "24hours" },
             (err,token) => {
                 if (err) throw err;
                 res.status(200).json(token);
