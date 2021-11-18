@@ -24,4 +24,60 @@ function ProfileHeader({
         (following) => following.user === profile.user._id
       ).length > 0;
   
-  
+      return (
+        <>
+          <Segment>
+            <Grid stackable>
+              <Grid.Column width={11}>
+                <Grid.Row>
+                  <Header
+                    as="h2"
+                    content={profile.user.name}
+                    style={{ marginBottom: "5px" }}
+                  />
+                </Grid.Row>
+    
+                <Grid.Row stretched>
+                  {profile.bio}
+                  <Divider hidden />
+                </Grid.Row>
+    
+                <Grid.Row>
+                  {profile.social ? (
+                    <List>
+                      <List.Item>
+                        <List.Icon name="mail" />
+                        <List.Content content={profile.user.email} />
+                      </List.Item>
+    
+                      {profile.social.github && (
+                        <List.Item>
+                          <List.Icon name="github" color="blue" />
+                          <List.Content
+                            style={{ color: "blue" }}
+                            content={profile.social.github}
+                          />
+                        </List.Item>
+                      )}
+    
+                      {profile.social.linkify && (
+                        <List.Item>
+                          <List.Icon name="linkify" color="red" />
+                          <List.Content
+                            style={{ color: "blue" }}
+                            content={profile.social.linkify}
+                          />
+                        </List.Item>
+                      )}
+    
+                      {profile.social.at && (
+                        <List.Item>
+                          <List.Icon name="at" color="red" />
+                          <List.Content
+                            style={{ color: "blue" }}
+                            content={profile.social.at}
+                          />
+                        </List.Item>
+                      )}
+    
+      
