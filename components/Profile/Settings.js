@@ -119,4 +119,59 @@ function Settings({ newMessageAlert }) {
             useEffect(() => {
               errorMsg && setTimeout(() => setError(null), 5000);
             }, [errorMsg]);
+
+            return (
+                <>
+                  <Form
+                    error={errorMsg !== null}
+                    loading={loading}
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      setLoading(true);
+            
+                      await pwUpdate(setSuccess, userPasswords);
+                      setLoading(false);
+            
+                      showPasswordFields(false);
+                    }}
+                  >
+                    <List.List>
+                      <List.Item>
+                        <Form.Input
+                          fluid
+                          icon={{
+                            name: "eye",
+                            circular: true,
+                            link: true,
+                            onClick: () =>
+                              showTyped((prev) => ({ ...prev, field1: !field1 })),
+                          }}
+                          type={field1 ? "text" : "password"}
+                          iconPosition="left"
+                          label="Current Password"
+                          placeholder="Enter current Password"
+                          name="currentPassword"
+                          onChange={handleChange}
+                          value={currentPassword}
+                        />
+            
+                        <Form.Input
+                          fluid
+                          icon={{
+                            name: "eye",
+                            circular: true,
+                            link: true,
+                            onClick: () =>
+                              showTyped((prev) => ({ ...prev, field2: !field2 })),
+                          }}
+                          type={field2 ? "text" : "password"}
+                          iconPosition="left"
+                          label="New Password"
+                          placeholder="Enter New Password"
+                          name="newPassword"
+                          onChange={handleChange}
+                          value={newPassword}
+                        />
+            
+            
           
