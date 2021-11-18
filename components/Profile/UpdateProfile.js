@@ -35,4 +35,68 @@ function UpdateProfile({ Profile }) {
       setProfile((prev) => ({ ...prev, [name]: value }));
     };
   
-  
+    return (
+        <>
+          <Form
+            error={errorMsg !== null}
+            loading={loading}
+            onSubmit={async (e) => {
+              e.preventDefault();
+              setLoading(true);
+    
+              let dpLink;
+    
+              if (media !== null) {
+                dpLink = await uploadPic(media);
+              }
+    
+              if (media !== null && !dpLink) {
+                setLoading(false);
+                return setErrorMsg("Error Uploading Image");
+              }
+    
+              await profileUpdate(profile, setLoading, setErrorMsg, dpLink);
+            }}
+          >
+            <Message
+              onDismiss={() => setErrorMsg(false)}
+              error
+              content={errorMsg}
+              attached
+              header="Oops!"
+            />
+    
+            <ImageFormat
+              inputRef={inputRef}
+              highlight={highlight}
+              setHighlight={setHighlight}
+              handleChange={handleChange}
+              mediaPreview={mediaPreview}
+              setMediaPreview={setMediaPreview}
+              setMedia={setMedia}
+              dpLink={profile.dpLink}
+            />
+    
+            <CommonFields
+              user={profile}
+              handleChange={handleChange}
+              displayLinks={displayLinks}
+              setDisplayLinks={setDisplayLinks}
+            />
+    
+            <Divider hidden />
+    
+            <Button
+              color="blue"
+              icon="pencil alternate"
+              disabled={profile.bio === "" || loading}
+              content="Submit"
+              type="submit"
+            />
+          </Form>
+        </>
+      );
+    }
+    
+    export default UpdateProfile;
+    
