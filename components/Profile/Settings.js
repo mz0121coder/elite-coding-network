@@ -19,4 +19,14 @@ function Settings({ newMessageAlert }) {
   
     const [success, setSuccess] = useState(false);
   
-  
+    function Settings({ newMessageAlert }) {
+        const [passwordFields, showPasswordFields] = useState(false);
+      
+        const [newMessageSettings, showNewMessageSettings] = useState(false);
+      
+        const isFirstRun = useRef(true);
+        const [popupSetting, setPopupSetting] = useState(newMessageAlert);
+      
+        const [success, setSuccess] = useState(false);
+      
+      
