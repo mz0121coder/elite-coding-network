@@ -56,6 +56,11 @@ router.post ("/"), async (req,res)  => {
                 res.status(200).json(token);
             }
         );
+    } catch (error) {
+        console.error (error);
+        return res.status (500).send ("Server Sleeping - Try again!");
     }
-}
+};
+
+module.exports = router;
 
