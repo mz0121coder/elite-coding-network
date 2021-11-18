@@ -32,5 +32,40 @@ router.get("/", authMiddleware, async (req, res) => {
     }
 });
 
+router.get ("/user/:userToFindId", authMiddleware, async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.params.userToFindId);
+
+        if (!user) {
+            return res.status (404).send ("No User Found");
+        }
+
+        return res.join ({ name: user.name, dpLink: user.dpLink});
+    }catch (error) {
+        console.error (error);
+        return res.status (500).send ("Server Error");
+    }
+});
+
+//Delete Chat
+    router.delete(`/:msgsWithUser`, authMiddleware, async (req, res) => {
+        try {
+            const {userId} = req;
+            const {msgsWithUser} = req.params;
+
+            const user = await ChatModel.findOne ({ user: userId });
+
+            const chatToDelete = user.chats.find (
+                (chat) => chat.msgWithUser.toString () === msgsWithUser
+                );
+
+            if (!chatToDelete {
+                return res.status(404).send("Chat not found");
+            }
+            
+    
+        }
+    })}
+})
 
 
