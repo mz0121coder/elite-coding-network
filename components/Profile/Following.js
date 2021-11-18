@@ -16,3 +16,21 @@ const Following = ({
   const [following, setFollowing] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadFollowInfo, setLoadFollowInfo] = useState(false);
+
+  useEffect(() => {
+    const getFollowing = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(
+          `${mainUrl}/api/profile/following/${profileId}`,
+          {
+            headers: { Authorization: cookie.get("token") },
+          }
+        );
+
+        setFollowing(res.data);
+      } catch (error) {
+        alert("Error Loading Followers");
+      }
+      setLoading(false);
+    };
