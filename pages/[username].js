@@ -79,4 +79,51 @@ function ProfilePage({
         }
       }, []);
     
+      return (
+        <>
+          {showToastr && <PostDeleteToastr />}
+    
+          <Grid stackable>
+            <Grid.Row>
+              <Grid.Column>
+                <ProfileTabs
+                  activeComponent={activeComponent}
+                  handleComponent={handleComponent}
+                  numberOfFollowers={numberOfFollowers}
+                  numberFollowing={numberFollowing}
+                  userAccount={userAccount}
+                  loggedUserFollowers={loggedUserFollowers}
+                />
+              </Grid.Column>
+            </Grid.Row>
+    
+            <Grid.Row>
+              <Grid.Column>
+                {activeComponent === "profile" && (
+                  <>
+                    <ProfileHeader
+                      profile={profile}
+                      userAccount={userAccount}
+                      loggedUserFollowers={loggedUserFollowers}
+                      setUserFollowers={setUserFollowers}
+                    />
+    
+                    {loading ? (
+                      <phPosts />
+                    ) : posts.length > 0 ? (
+                      posts.map((post) => (
+                        <CardForPosts
+                          socket={socket}
+                          key={post._id}
+                          post={post}
+                          user={user}
+                          setPosts={setPosts}
+                          setShowToastr={setShowToastr}
+                        />
+                      ))
+                    ) : (
+                      <NoPosts />
+                    )}
+                  </>
+                )}
     
