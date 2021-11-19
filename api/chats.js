@@ -47,25 +47,36 @@ router.get ("/user/:userToFindId", authMiddleware, async (req, res) => {
     }
 });
 
-//Delete Chat
-    router.delete(`/:msgsWithUser`, authMiddleware, async (req, res) => {
-        try {
-            const {userId} = req;
-            const {msgsWithUser} = req.params;
-
-            const user = await ChatModel.findOne ({ user: userId });
-
-            const chatToDelete = user.chats.find (
-                (chat) => chat.msgWithUser.toString () === msgsWithUser
-                );
-
-            if (!chatToDelete {
-                return res.status(404).send("Chat not found");
-            }
-            
-    
-        }
-    })}
-})
+router.delete(`/:msgsWithUser`, authMiddleware, async (req, res) => {
+    try {
+      const { userId } = req;
+      const { msgsWithUser } = req.params;
+  
+      const user = await ChatModel.findOne({ user: userId });
+  
+      const chatToDelete = user.chats.find(
+        (chat) => chat.msgsWithUser.toString() === msgsWithUser
+      );
+  
+      if (!chatToDelete) {
+        return res.status(404).send("Chat not found");
+      }
+  
+      const indexOf = user.chats
+        .map((chat) => chat.msgsWithUser.toString())
+        .indexOf(msgsWithUser);
+  
+      user.chats.splice(indexOf, 1);
+  
+      await user.save();
+  
+      return res.status(200).send("Chat deleted");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send("Server Error");
+    }
+  });
+  
+  module.exports = router;
 
 
