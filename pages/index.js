@@ -42,3 +42,51 @@ function Index({ user, postsData, errorLoading }) {
         socket.current.on("newMsgReceived", async ({ newMsg }) => {
           const { name, dpLink } = await getUserInfo(newMsg.sender);
   
+          if (user.newMessageAlert) {
+            setNewMsgReceived({
+              ...newMsg,
+              senderName: name,
+              senderProfilePic: dpLink,
+            });
+            showNewMsgModal(true);
+          }
+          newMsgSound(name);
+        });
+      }
+  
+      document.title = `Welcome, ${user.name.split(" ")[0]}`;
+    }, []);
+  
+    useEffect(() => {
+      showToastr && setTimeout(() => setShowToastr(false), 3000);
+    }, [showToastr]);
+  
+    const fetchDataOnScroll = async () => {
+      try {
+        const res = await axios.get(`${mainUrl}/api/posts`, {
+          headers: { Authorization: cookie.get("token") },
+          params: { pageNumber },
+        });
+  
+        if (res.data.length === 0) setHasMore(false);
+  
+        setPosts((prev) => [...prev, ...res.data]);
+        setPageNumber((prev) => prev + 1);
+      } catch (error) {
+        alert("Error fetching Posts");
+      }
+    };
+  
+    useEffect(() => {
+      if (socket.current) {
+        socket.current.on(
+          "newNotificationReceived",
+          ({ name, dpLink, username, postId }) => {
+            setNewNotification({ name, dpLink, username, postId });
+  
+            showAlertPopup(true);
+          }
+        );
+      }
+    }, []);
+  
