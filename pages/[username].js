@@ -26,3 +26,17 @@ function ProfilePage({
     userFollowers,
   }) {
     const router = useRouter();
+
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [showToastr, setShowToastr] = useState(false);
+  
+    const [activeComponent, setActiveComponent] = useState("profile");
+    const handleComponent = (clickedTab) => setActiveComponent(clickedTab);
+  
+    const [loggedUserFollowers, setUserFollowers] = useState(userFollowers);
+  
+    const userAccount = profile.user._id === user._id;
+  
+    if (errorLoading) return <NoProfile />;
+  
