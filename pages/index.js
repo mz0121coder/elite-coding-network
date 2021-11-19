@@ -141,3 +141,20 @@ function Index({ user, postsData, errorLoading }) {
     </>
   );
 }
+
+Index.getInitialProps = async (ctx) => {
+  try {
+    const { token } = parseCookies(ctx);
+
+    const res = await axios.get(`${mainUrl}/api/posts`, {
+      headers: { Authorization: token },
+      params: { pageNumber: 1 },
+    });
+
+    return { postsData: res.data };
+  } catch (error) {
+    return { errorLoading: true };
+  }
+};
+
+export default Index;
