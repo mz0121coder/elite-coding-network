@@ -40,3 +40,43 @@ function ProfilePage({
   
     if (errorLoading) return <NoProfile />;
   
+    useEffect(() => {
+        const getPosts = async () => {
+          setLoading(true);
+    
+          try {
+            const { username } = router.query;
+            const res = await axios.get(
+              `${mainUrl}/api/profile/posts/${username}`,
+              {
+                headers: { Authorization: cookie.get("token") },
+              }
+            );
+    
+            setPosts(res.data);
+          } catch (error) {
+            alert("Error Loading Posts");
+          }
+    
+          setLoading(false);
+        };
+        getPosts();
+      }, [router.query.username]);
+    
+      useEffect(() => {
+        showToastr && setTimeout(() => setShowToastr(false), 4000);
+      }, [showToastr]);
+    
+      const socket = useRef();
+    
+      useEffect(() => {
+        if (!socket.current) {
+          socket.current = io(mainUrl);
+        }
+    
+        if (socket.current) {
+          socket.current.emit("join", { userId: user._id });
+        }
+      }, []);
+    
+    
