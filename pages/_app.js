@@ -19,3 +19,10 @@ function MyApp({ Component, pageProps }) {
     const { token } = parseCookies(ctx);
     let pageProps = {};
   
+    const protectedRoutes =
+    ctx.pathname === "/" ||
+    ctx.pathname === "/[username]" ||
+    ctx.pathname === "/notifications" ||
+    ctx.pathname === "/post/[postId]" ||
+    ctx.pathname === "/messages" ||
+    ctx.pathname === "/search";
