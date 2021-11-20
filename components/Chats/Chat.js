@@ -37,8 +37,29 @@ function Chat ({ chat, activeChats, deleteChats }) {
                         right: "10px",
                         cursor: "pointer",
                     }}
+                 >
+                     <Icon
+                     name = "trash alternate"
+                     color = "red"
+                     onClick = {() => deleteChat(chat.msgsWithUser)}
+                     />
+                    </div>    
+        
                 </Comment.Metadata>
+
+                <Comment.Text>
+                    {chat.lastMasssage.length > 20
+                    ? `$chat.lastMessage.substring (0,20)}...`
+                    : chat.lastMessage}
+                </Comment.Text>
             </Comment.Content>
-            </Comment></List.Item>    
+            </Comment>
+            </List.Item>
+            </List>
+            <Divider/>
+            </>
+    );    
 
 }
+
+export default Chat;
