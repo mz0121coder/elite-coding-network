@@ -26,3 +26,44 @@ function AddPost({ user, setPosts }) {
         setMediaPreview(URL.createObjectURL(files[0]));
       }
     }
+
+    setNewPost((prev) => ({ ...prev, [name]: value }));
+};
+
+const addStyles = () => ({
+  textAlign: "center",
+  height: "150px",
+  width: "150px",
+  border: "dotted",
+  paddingTop: media === null && "60px",
+  cursor: "pointer",
+  borderColor: highlight ? "green" : "black",
+});
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  let picUrl;
+
+  if (media !== null) {
+    picUrl = await uploadPic(media);
+    if (!picUrl) {
+      setLoading(false);
+      return setError("Error Uploading Image");
+    }
+  }
+
+  await submitNewPost(
+    newPost.text,
+    newPost.location,
+    picUrl,
+    setPosts,
+    setNewPost,
+    setError
+  );
+
+  setMedia(null);
+  mediaPreview && URL.revokeObjectURL(mediaPreview);
+  setTimeout(() => setMediaPreview(null), 3000);
+  setLoading(false);
+};
