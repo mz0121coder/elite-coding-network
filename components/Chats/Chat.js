@@ -20,6 +20,25 @@ function Chat ({ chat, activeChats, deleteChats }) {
              shallow: true,
          })
         }
-    ></List.Item>    
+    >
+        <Comment>
+            <Comment.Avatar src={chat.dp.Link} />
+            <Comment.Content>
+                <Comment.Author as="a">
+                    {chat.name}{" "}
+                    {isOnline && < Icon name= "circle" size= "small" colour="green"/>}
+                </Comment.Author>
+
+                <Comment.Metadata>
+                    <div>{calcTime(chat.date)}</div>
+                    <div
+                    style = {{
+                        position:"absolute",
+                        right: "10px",
+                        cursor: "pointer",
+                    }}
+                </Comment.Metadata>
+            </Comment.Content>
+            </Comment></List.Item>    
 
 }
