@@ -5,6 +5,8 @@ const ChatModel = require ("../models/ChatModel");
 const UserModel = require ("../models/UserModel");
 const authMiddleware = require ("../middleware/authMiddleware");
 
+// GET chats
+
 router.get("/", authMiddleware, async (req, res) => {
     try {
         const { userId } = req;
@@ -32,6 +34,9 @@ router.get("/", authMiddleware, async (req, res) => {
     }
 });
 
+
+// GET user info
+
 router.get ("/user/:userToFindId", authMiddleware, async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.userToFindId);
@@ -46,6 +51,9 @@ router.get ("/user/:userToFindId", authMiddleware, async (req, res) => {
         return res.status (500).send ("Server Error");
     }
 });
+
+
+//Function to delete chat
 
 router.delete(`/:msgsWithUser`, authMiddleware, async (req, res) => {
     try {
