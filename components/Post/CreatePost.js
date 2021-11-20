@@ -28,42 +28,159 @@ function AddPost({ user, setPosts }) {
     }
 
     setNewPost((prev) => ({ ...prev, [name]: value }));
-};
+  };
 
-const addStyles = () => ({
-  textAlign: "center",
-  height: "150px",
-  width: "150px",
-  border: "dotted",
-  paddingTop: media === null && "60px",
-  cursor: "pointer",
-  borderColor: highlight ? "green" : "black",
-});
+  const addStyles = () => ({
+    textAlign: "center",
+    height: "150px",
+    width: "150px",
+    border: "dotted",
+    paddingTop: media === null && "60px",
+    cursor: "pointer",
+    borderColor: highlight ? "green" : "black",
+  });
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  let picUrl;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    let picUrl;
 
-  if (media !== null) {
-    picUrl = await uploadPic(media);
-    if (!picUrl) {
-      setLoading(false);
-      return setError("Error Uploading Image");
+    if (media !== null) {
+      picUrl = await uploadPic(media);
+      if (!picUrl) {
+        setLoading(false);
+        return setError("Error Uploading Image");
+      }
     }
-  }
 
-  await submitNewPost(
-    newPost.text,
-    newPost.location,
-    picUrl,
-    setPosts,
-    setNewPost,
-    setError
+    await submitNewPost(
+      newPost.text,
+      newPost.location,
+      picUrl,
+      setPosts,
+      setNewPost,
+      setError
+    );
+
+    setMedia(null);
+    mediaPreview && URL.revokeObjectURL(mediaPreview);
+    setTimeout(() => setMediaPreview(null), 3000);
+    setLoading(false);
+  };
+
+  return (
+    <>
+      {showModal && (
+        <CropImage
+          mediaPreview={mediaPreview}
+          setMedia={setMedia}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
+      )}
+
+      <Form error={error !== null} onSubmit={handleSubmit}>
+        <Message
+          error
+          onDismiss={() => setError(null)}
+          content={error}
+          header="Oops!"
+        />
+
+        <Form.Group>
+          <Image src={user.dpLink} circular avatar inline />
+          <Form.TextArea
+            placeholder="Whats Happening"
+            name="text"
+            value={newPost.text}
+            onChange={handleChange}
+            rows={4}
+            width={14}
+          />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Input
+            value={newPost.location}
+            name="location"
+            onChange={handleChange}
+            label="Add Location"
+            icon="map marker alternate"
+            placeholder="Want to add Location?"
+          />
+
+          <input
+            ref={inputRef}
+            onChange={handleChange}
+            name="media"
+            style={{ display: "none" }}
+            type="file"
+            accept="image/*"
+          />
+        </Form.Group>
+
+        <div
+          onClick={() => inputRef.current.click()}
+          style={addStyles()}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setHighlight(true);
+          }}
+          onDragLeave={(e) => {
+            e.preventDefault();
+            setHighlight(false);
+          }}
+          onDrop={(e) => {
+            e.preventDefault();
+            setHighlight(true);
+
+            const droppedFile = Array.from(e.dataTransfer.files);
+
+            setMedia(droppedFile[0]);
+            setMediaPreview(URL.createObjectURL(droppedFile[0]));
+          }}
+        >
+          {media === null ? (
+            <Icon name="plus" size="big" />
+          ) : (
+            <Image
+              style={{ height: "150px", width: "150px" }}
+              src={mediaPreview}
+              alt="PostImage"
+              centered
+              size="medium"
+            />
+          )}
+        </div>
+
+        {mediaPreview !== null && (
+          <>
+            <Divider hidden />
+
+            <Button
+              content="Crop Image"
+              type="button"
+              primary
+              circular
+              onClick={() => setShowModal(true)}
+            />
+          </>
+        )}
+
+        <Divider hidden />
+
+        <Button
+          circular
+          disabled={newPost.text === "" || loading}
+          content={<strong>Post</strong>}
+          style={{ backgroundColor: "#1DA1F2", color: "white" }}
+          icon="send"
+          loading={loading}
+        />
+      </Form>
+      <Divider />
+    </>
   );
+}
 
-  setMedia(null);
-  mediaPreview && URL.revokeObjectURL(mediaPreview);
-  setTimeout(() => setMediaPreview(null), 3000);
-  setLoading(false);
-};
+export default AddPost;
