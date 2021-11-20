@@ -19,3 +19,50 @@ function LikesList({ postId, trigger }) {
     }
     setLoading(false);
   };
+
+  return (
+    <Popup
+      on="click"
+      onClose={() => setLikesList([])}
+      onOpen={getLikesList}
+      popperDependencies={[likesList]}
+      trigger={trigger}
+      wide
+    >
+      {loading ? (
+        <placeholderForLikes />
+      ) : (
+        <>
+          {likesList.length > 0 && (
+            <div
+              style={{
+                overflow: "auto",
+                maxHeight: "15rem",
+                height: "15rem",
+                minWidth: "210px",
+              }}
+            >
+              <List selection size="large">
+                {likesList.map((like) => (
+                  <List.Item key={like._id}>
+                    <Image avatar src={like.user.dpLink} />
+
+                    <List.Content>
+                      <List.Header
+                        onClick={() => Router.push(`/${like.user.username}`)}
+                        as="a"
+                        content={like.user.name}
+                      />
+                    </List.Content>
+                  </List.Item>
+                ))}
+              </List>
+            </div>
+          )}
+        </>
+      )}
+    </Popup>
+  );
+}
+
+export default LikesList;
