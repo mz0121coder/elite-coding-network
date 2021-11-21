@@ -65,26 +65,22 @@ const addChat = (result) => {
 
     });
 
-    
-        const newChat = {
-            msgWithUser
-       s }
-    }
-    };
-}
+    useEffect (() => {
+        if (text.length === 0 & loading) setLoading (false);
+    }, [text]);
 
-    }
-     }
-    }
-}
-
-useEffect (() => {
+    return (
     <Search
-    onBlur={()} => {
+    onBlur={() => {
         results.length > 0 && setResults ([]);
         loading && setLoading (false);
         setText ("");
     }}
+
     
-    }
+    />
+    );
+}
+
+
 }
