@@ -63,11 +63,14 @@ function CommonFields ({
             onChange={handleChange}
             />
             
-
-
-
-
+            <Message
+            icon="attention"
+            info
+            size = "small"
+            header = "Social Media Links Are Optional!"
+            />
+            </>
         )}
-
-    )
-}
+        </>
+    );
+        }
