@@ -39,7 +39,34 @@ function CommonFields ({
             onChange={handleChange}
             />
 
+            <Form.Input
+            icon="connectdevelop"
+            iconPosition="left"
+            name="connectdevelop"
+            value={connectdevelop}
+            onChange={handleChange}
+            />
             
+            <Form.Input
+            icon="linkify"
+            iconPosition="left"
+            name="linkify"
+            value={linkify}
+            onChange={handleChange}
+            />
+
+            <Form.Input
+            icon="at"
+            iconPosition="left"
+            name="at"
+            value={at}
+            onChange={handleChange}
+            />
+            
+
+
+
+
         )}
 
     )
