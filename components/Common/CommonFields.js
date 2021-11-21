@@ -1,5 +1,5 @@
 import React from "react";
-
+import {Form, Button, TextArea, Divider} from "semantic-ui-react"
 
 function CommonFields ({
     user: {bio, github, linkify, at, connectdevelop},
@@ -19,5 +19,8 @@ function CommonFields ({
         onChange={handleChange}
         placeholder="bio"
         />
+
+        <Button
+
     )
 }
