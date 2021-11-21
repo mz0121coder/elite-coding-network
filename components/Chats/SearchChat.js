@@ -23,7 +23,7 @@ function SearchChat ({chats, setChats}) {
 
     try {
         cancel && cancel ();
-        const CancelToken = axios.CanelToken;
+        const CancelToken = axios.CancelToken;
         const token =cookie.get("token");
 
         const res = await axios.get (`${mainUrl}/api/search$value`, {
