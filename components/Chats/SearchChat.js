@@ -17,6 +17,7 @@ function SearchChat ({chats, setChats}) {
         const{ value } = e.target;
         setText (value);
         if (value.length === 0 ) return ;
+        if (value.trim().length ===0) return;
 
         setLoading (true);
 
