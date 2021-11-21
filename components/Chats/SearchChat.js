@@ -46,14 +46,19 @@ const addChat = (result) => {
     chats.length > 0 &&
     chats.filter ((chat) => chat.msgWithUser === result._id). length > 0;
 
-    if (alreadyInChat) = {
+    if (alreadyInChat) {
+        return Router.push (`/messages?message=${result._id}`);
+    }
+    else {
+        const newChat = {
         msgWithUser: result._id,
         name:result.name,
         dpLink: result.dpLink,
         lastMessage:"",
         date: Date.now(),
+        };
 
-    else {
+    
         const newChat = {
             msgWithUser
         }
