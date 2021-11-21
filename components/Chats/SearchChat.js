@@ -47,7 +47,7 @@ const addChat = (result) => {
     chats.filter ((chat) => chat.msgWithUser === result._id). length > 0;
 
     if (alreadyInChat) {
-        return Router.push (`/messages?message=${result._id}`);
+        return router.push (`/messages?message=${result._id}`);
     }
     else {
         const newChat = {
@@ -60,7 +60,7 @@ const addChat = (result) => {
 
         setChats ((prev) => [newChat, ...prev]);
 
-        return Router.push (`/messages?message=${result._id}`);
+        return router.push (`/messages?message=${result._id}`);
     }
 
     });
