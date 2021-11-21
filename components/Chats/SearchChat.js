@@ -45,6 +45,20 @@ const addChat = (result) => {
     const alreadyInChat =
     chats.length > 0 &&
     chats.filter ((chat) => chat.msgWithUser === result._id). length > 0;
+
+    if (alreadyInChat) = {
+        msgWithUser: result._id,
+        name:result.name,
+        dpLink: result.dpLink,
+        lastMessage:"",
+        date: Date.now(),
+
+    else {
+        const newChat = {
+            msgWithUser
+        }
+    }
+    };
 }
 
     }
