@@ -21,6 +21,26 @@ function CommonFields ({
         />
 
         <Button
+        content="Add Social Links"
+        color="red"
+        icon="at"
+        type="button"
+        onClick={() => setDisplayLinks(!displayLinks)} 
+        />
+
+        {displayLinks && (
+            <>
+            <Divider />
+            <Form.Input
+            icon="github"
+            iconPosition="left"
+            name="github"
+            value={github}
+            onChange={handleChange}
+            />
+
+            
+        )}
 
     )
 }
