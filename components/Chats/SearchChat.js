@@ -77,10 +77,19 @@ const addChat = (result) => {
         setText ("");
     }}
 
+    loading = {loading}
+    value={text}
+    resultRenderer={resultRenderer}
+    results={results}
+    onSearchChange={handleChange}
+    minCharacters={1}
+    onResultSelect={(e,data) => addChat (data.result)}
     
     />
     );
 }
+
+
 
 
 }
