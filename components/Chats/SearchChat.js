@@ -105,5 +105,5 @@ const resultRenderer =({_id, dpLink, name }) => {
     );
 };
 
-
+export default SearchChat;
 
