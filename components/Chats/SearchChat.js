@@ -89,6 +89,17 @@ const addChat = (result) => {
     );
 }
 
+const resultRenderer =({_id, dpLink, name }) => {
+    return (
+        <List key = {_id}>
+            <List.item>
+                <Image src={dpLink} alt="ProfilePic" avatar/>
+                <List.Content header={name} as ="a"/>
+            </List.item>
+        </List>
+    );
+};
+
 
 
 
