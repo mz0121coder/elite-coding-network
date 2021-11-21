@@ -58,10 +58,17 @@ const addChat = (result) => {
         date: Date.now(),
         };
 
+        setChats ((prev) => [newChat, ...prev]);
+
+        return Router.push (`/messages?message=${result._id}`);
+    }
+
+    });
+
     
         const newChat = {
             msgWithUser
-        }
+       s }
     }
     };
 }
