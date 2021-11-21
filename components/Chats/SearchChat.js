@@ -4,13 +4,14 @@ import axios from "axios";
 import cookie from "js-cookie";
 import {useRouter} from "next/router";
 import mainUrl from "../..utils.mainUrl";
+let cancel;
 
 function SearchChat ({chats, setChats}) {
     const [text, setText] = useState ("");
     const [loading, setLoading] = useState (false);
     const [results, setResults] = useState ([]);
     
-    const Router = useRouter ();
+    const router = useRouter ();
 
     const handleChange =async (e) => {
         const{ value } = e.target;
