@@ -23,7 +23,10 @@ function SearchChat ({chats, setChats}) {
 
     try {
         cancel && cancel ();
-        const CancelToken = axios.get(`${mainUrl}/api/search$(value}`, {
+        const CancelToken = axios.CanelToken;
+        const token =cookie.get("token");
+
+        const res = await axios.get (`${mainUrl}/api/search$value`, {
             headers: {Authorization: token},
             cancelToken: new CancelToken((canceler) => {
                 cancel = canceler;
@@ -65,7 +68,7 @@ const addChat = (result) => {
         return router.push (`/messages?message=${result._id}`);
     }
 
-    });
+    };
 
     useEffect (() => {
         if (text.length === 0 & loading) setLoading (false);
@@ -104,5 +107,3 @@ const resultRenderer =({_id, dpLink, name }) => {
 
 
 
-
-}
