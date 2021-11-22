@@ -31,5 +31,12 @@ function ImageFormat ({
     )  :(
         <span style = {{ textAlign: "center"}}>
             <Image
+            src ={dpLink}
+            alt="Profile picture"
+            style = {{cursor: "pointer"}}
+            onClick ={()} => inputRef.current.click()}
+            size="huge"
+            centered
+    );
         </span>
 }
