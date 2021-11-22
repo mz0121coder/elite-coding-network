@@ -1,6 +1,7 @@
 import React from "react";
 import { Form} from "semantic-ui-react";
 import{useRouter} from "next/router";
+import e from "express";
 
 function ImageFormat ({
     highlight,
@@ -34,9 +35,47 @@ function ImageFormat ({
             src ={dpLink}
             alt="Profile picture"
             style = {{cursor: "pointer"}}
-            onClick ={()} => inputRef.current.click()}
+            onClick ={() => inputRef.current.click()}
             size="huge"
             centered
-    );
+            />
+            Drag n Drop or Click to upload image
         </span>
+    );
+
+    return (
+        <>
+        <Form.field>
+            <Segment placeholder basic secondary>
+                <input
+                style = {{ display: "none"}}
+                type= "file"
+                accept = "image/*"
+                onChange={handleChange}
+                name="media"
+                ref={inputRef}
+                />
+
+                <div
+                onDragOver={(e)} => {
+                    e.preventDefault ();
+                    setHighlight(true);
+                }}
+                onDragLeave={{e}} => {
+                    e.preventDefault ();
+                    setHighlight(false);
+                }}
+                onDragDrop={{e}} => {
+                    e.preventDefault ();
+                    setHighlight(true);
+
+                    const droppedFile = Array.from (e.dataTransfer.files);
+                    setMedia(droppedFile[0]);
+                    setMediaPreview(URL.createObjectURL (droppedFile[0]));
+                }}
+                >
+                
+            </Segment>
+        </Form.field>
+
 }
