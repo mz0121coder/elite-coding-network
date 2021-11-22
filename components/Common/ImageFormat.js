@@ -13,7 +13,7 @@ function ImageFormat ({
 })  {
     const router =useRouter ();
 
-    const signupRoute = rouer.pathname === "/signup";
+    const signupRoute = router.pathname === "/signup";
 
     const checkForSignupPage = () =>
     signupRoute ? (
@@ -28,5 +28,8 @@ function ImageFormat ({
             Drag n Drop or Click to upload image
         </Header>
         </>
-    )
+    )  :(
+        <span style = {{ textAlign: "center"}}>
+            <Image
+        </span>
 }
