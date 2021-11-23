@@ -1,7 +1,6 @@
 import React from "react";
-import { Form} from "semantic-ui-react";
+import { Form, Segment, Image, Icon, Header,} from "semantic-ui-react";
 import{useRouter} from "next/router";
-import e from "express";
 
 function ImageFormat ({
     highlight,
@@ -85,9 +84,22 @@ function ImageFormat ({
                          </Segment>
                          </>
                  ) :(
-                     
-                 ))
+                     <Segment color = "green" placeholder basic>
+                         <Image
+                         src = {mediapreview}
+                         size ="medium"
+                         centered
+                         style = {{ "cursor:pointer"}}
+                         onClick = {() => inputRef.current.click()}
+                         />
+                   </Segment>  
+                 )}
+                 </div>
             </Segment>
-        </Form.field>
+        </Form.Field>
+        </>
+        );
+        }
 
-}
+        export default ImageFormat;
+
