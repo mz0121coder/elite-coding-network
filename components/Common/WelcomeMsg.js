@@ -17,6 +17,31 @@ export const HeaderMessage = () => {
     );
     );
 
+    export const FooterMessage = () => {
+        const router = useRouter ();
+        const signupRoute = router.pathname === "/signup";
+
+
+        return (
+            <>
+            <Message attached = "bottom" warning>
+                <Icon name = "help"/>
+                Existing user? <Link href= "/login" >Login Here Instead</Link>
+            </Message>
+            Divider hidden/>
+            </>
+            ) : (
+
+                <>
+                <Message attached ="bottom" info>
+                    Icon name="lock" />
+                    <Link href = "/reset">Forgot password?</Link>
+                </Message>
+
+
+        )
+    }
+
     
 
 
