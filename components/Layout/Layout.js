@@ -104,3 +104,30 @@ function Layout({ children, user }) {
                 </Ref>
               </Media>
 
+              <Media between={["mobile", "tablet"]}>
+                <Ref innerRef={contextRef}>
+                  <Grid>
+                    {!messagesRoute ? (
+                      <>
+                        <Grid.Column floated="left" width={2}>
+                          <Sticky context={contextRef}>
+                            <SideBars user={user} pc={false} />
+                          </Sticky>
+                        </Grid.Column>
+
+                        <Grid.Column width={14}>
+                          <Visibility context={contextRef}>
+                            {children}
+                          </Visibility>
+                        </Grid.Column>
+                      </>
+                    ) : (
+                      <>
+                        <Grid.Column floated="left" width={1} />
+                        <Grid.Column width={15}>{children}</Grid.Column>
+                      </>
+                    )}
+                  </Grid>
+                </Ref>
+              </Media>
+
