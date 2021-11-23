@@ -42,8 +42,7 @@ export const FooterMessage = () => {
             <Icon name="help" />
             New User? <Link href="/signup">Signup Here</Link> Instead{" "}
           </Message>
-        <Divider hidden />
-        </>
+             </>
       )}
     </>
   );
