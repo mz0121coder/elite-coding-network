@@ -18,3 +18,16 @@ function Navbar() {
             Login
           </Menu.Item>
         </Link>
+
+        <Link href="/signup">
+          <Menu.Item header active={isActive("/signup")}>
+            <Icon size="large" name="signup" />
+            Signup
+          </Menu.Item>
+        </Link>
+      </Container>
+    </Menu>
+  );
+}
+
+export default Navbar;
