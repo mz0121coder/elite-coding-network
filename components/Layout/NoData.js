@@ -29,7 +29,26 @@ export const NoFollowInfo = ({followersTab, followingTab}) => (
         />
     )}
 
-    
+{followingTab && (
+      <Message
+        icon="user outline"
+        info
+        content={`User does not follow any users`}
+      />
+    )}
+  </>
+);
+
+
+export const NoMsg = () => (
+  <Message
+    info
+    icon="telegram plane"
+    header="No messages"
+    content="Search users above to message someone"
+  />
+);
+
 )
 
 )
