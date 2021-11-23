@@ -20,7 +20,7 @@ function ImageFormat ({
     signupRoute ? (
         <>
         <Header icon>
-            <icon
+            <Icon
             name="file image outline"
             style={{ cursor: "pointer"}}
             onClick={() => inputRef.current.click ()}
@@ -45,7 +45,7 @@ function ImageFormat ({
 
     return (
         <>
-        <Form.field>
+        <Form.Field>
             <Segment placeholder basic secondary>
                 <input
                 style = {{ display: "none"}}
@@ -74,7 +74,19 @@ function ImageFormat ({
                     setMediaPreview(URL.createObjectURL (droppedFile[0]));
                 }}
                 >
-                
+                 (mediaPreview ===null ? (
+                     <>
+                     <Segment
+                     {...(highlight && {color: "green"})}
+                     placeholder
+                     basic
+                     >
+                         {checkForSignupPage()}
+                         </Segment>
+                         </>
+                 ) :(
+                     
+                 ))
             </Segment>
         </Form.field>
 
