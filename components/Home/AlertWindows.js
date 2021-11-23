@@ -90,14 +90,31 @@ function MsgAlertModal ({
 
 const Instructions = ({ username }) => (
     <List>
-        <List.item>
+        <List.Item>
             <Icon name="help" />
             <List.Content>
                 <List.Header>
                     If you do not like this popup to appear when you recieve a new message:
-                    
+
                 </List.Header>
             </List.Content>
-        </List.item>
+        </List.Item>
+
+        <List.Item>
+            <Icon name="hand point right"/>
+            <List.content>
+                You can disable it by going to <Link href={`/username}`}>
+                    <a>Account</a>
+                </Link>
+                Page and clicking on Setting Tab.
+                </List.Content>
+        </List.Item>
+
+        <List.Item>
+            <Icon name="hand point right"/>
+            Just toggle the setting to disable/enable the Message Popup to appear.
+        </List.Item>
     </List>
-)
+);
+
+export default MsgAlertModal;
