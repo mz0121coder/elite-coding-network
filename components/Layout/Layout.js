@@ -154,3 +154,5 @@ function Layout({ children, user }) {
 );
 }
 
+export default Layout
+
