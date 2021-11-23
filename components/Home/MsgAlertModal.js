@@ -25,8 +25,37 @@ function MsgAlertModal({
                 msgSendToUserId: newMsgRecievedAlert.sender,
                 msg:text,
             });
+
+            socket.current.on ("msgSentFromAlert", () => {
+                showNewMsgModal (false);
+            });
         }
-    }
+    };
+
+    return (
+        <>
+          <Modal
+            size="small"
+            open={newMsgModal}
+            onClose={onModalClose}
+            closeIcon
+            closeOnDimmerClick
+          >
+            <ModalHeader
+            content={`New Message from ${newMsgRecievedAlert.sendName}`}
+            />
+
+            <Modal.Content>
+                <div className="bubbleWrapper">
+                <div className="inlineContainer">
+                    <img 
+                    className ="inlineIcon"
+                    src = {newMsgRecievedAlert.senderProfilePicture
+                    />
+                </div> 
+   
+
+    )
 }
 
 
