@@ -78,11 +78,26 @@ function MsgAlertModal ({
                             </Segment>
                                 </div>
 
+                                <br/>
 
-                            </Segment>
-
-                        </Form>
-                    </Segment>
-                </div>
+                                <Instructions username={user.username} />
+                                </div>
             </Modal.Content>
-    )
+            <Modal>
+                </>
+                );
+}
+
+const Instructions = ({ username }) => (
+    <List>
+        <List.item>
+            <Icon name="help" />
+            <List.Content>
+                <List.Header>
+                    If you do not like this popup to appear when you recieve a new message:
+                    
+                </List.Header>
+            </List.Content>
+        </List.item>
+    </List>
+)
