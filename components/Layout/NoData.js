@@ -49,4 +49,24 @@ export const NoMsg = () => (
   />
 );
 
+export const NoPosts = () => (
+    <Message
+      info
+      icon="code"
+      header="Hey!"
+      content="No Posts. Make sure you have followed someone."
+    />
+  );
 
+  export const NoProfile = () => (
+    <Message info icon="code" header="Hey!" content="No Profile Found." />
+  );
+  
+  export const NoNotifications = () => (
+    <Message content="No Notifications" icon="code" info />
+  );
+  
+  export const NoPostListed = () => (
+    <Message info icon="code" header="Hey!" content="No Post Found." />
+  );
+  
