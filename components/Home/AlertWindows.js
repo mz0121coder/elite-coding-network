@@ -54,5 +54,23 @@ function MsgAlertModal ({
                             src={newMsgReceivedAlert.senderProfilePicture}
                             />
                 </div>
+                
+                <div className="otherBubble other">{newMsgReceivedAlert.msg}</div>
+                <span className="other"> {calcTime(newMsgReceivedAlert.date)}</span>
+                </div>
+
+                <div style= {{ position: "sticky", bottom: "0px"}}>
+                    <Segment secondary color="teal" attached="bottom">
+                        <Form reply onSubmit={formSubmit}>
+                            <Form.Input
+                            size="large"
+                            placeholder="Send New Message"
+                            value = {text}
+                            onChange = { (e) => setText (e.target.value)}
+                            
+
+                        </Form>
+                    </Segment>
+                </div>
             </Modal.Content>
     )
