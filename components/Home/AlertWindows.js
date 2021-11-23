@@ -67,7 +67,19 @@ function MsgAlertModal ({
                             placeholder="Send New Message"
                             value = {text}
                             onChange = { (e) => setText (e.target.value)}
-                            
+                            action={{
+                                color: "blue",
+                                icon: "telegram plane",
+                                disabled: text ==="",
+                                loading:loading,
+                            }}
+                            />
+                            </Form>
+                            </Segment>
+                                </div>
+
+
+                            </Segment>
 
                         </Form>
                     </Segment>
