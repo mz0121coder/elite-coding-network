@@ -17,5 +17,26 @@ function MsgAlertModal ({
 
     const onModalClose = ()=> showNewMsgModal (false);
 
-    const formSumbit = 
+    const formSumbit = (e) => {
+        e.preventDefault ();
+
+        if (socket.current) {
+            socket.current.emit("sendMsgFromAlert", {
+                userId: user._id,
+                msgSendToUserId: newMsgRecievedAlert.sender,
+                msg: text,
+            });
+
+            socket.current.on("msgSentFromAlert", () =>{
+                showNewMsgModal(false);
+            });
+        }
+    };
+
+    
+
+        
+            })
+        }
+    }
 }
