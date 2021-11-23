@@ -32,3 +32,47 @@ const AppMedia = createMedia({
     Router.onRouteChangeStart = () => nprogress.start();
     Router.onRouteChangeComplete = () => nprogress.done();
     Router.onRouteChangeError = () => nprogress.done();
+
+    return (
+        <>
+          <HeadTags />
+          {user ? (
+            <>
+              <style>{mediaStyles}</style>
+    
+              <MediaContextProvider>
+                <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
+                  <Media greaterThanOrEqual="computer">
+                    <Ref innerRef={contextRef}>
+                      <Grid>
+                        {!messagesRoute ? (
+                          <>
+                            <Grid.Column floated="left" width={2}>
+                              <Sticky context={contextRef}>
+                                <SideBars user={user} pc />
+                              </Sticky>
+                            </Grid.Column>
+    
+                            <Grid.Column width={10}>
+                              <Visibility context={contextRef}>
+                                {children}
+                              </Visibility>
+                            </Grid.Column>
+    
+                            <Grid.Column floated="left" width={4}>
+                              <Sticky context={contextRef}>
+                                <Segment basic>
+                                  <Search />
+                                </Segment>
+                              </Sticky>
+                            </Grid.Column>
+                          </>
+                        ) : (
+                          <>
+                            <Grid.Column floated="left" width={1} />
+                            <Grid.Column width={15}>{children}</Grid.Column>
+                          </>
+                        )}
+                      </Grid>
+                    </Ref>
+                  </Media>
