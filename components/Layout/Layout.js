@@ -141,4 +141,16 @@ function Layout({ children, user }) {
           </MediaContextProvider>
         </>
       ) : (
+          <>
+
+        
+        <Navbar />
+        <Container text style={{ paddingTop: "1rem" }}>
+          {children}
+        </Container>
+      </>
+    )}
+  </>
+);
+}
 
