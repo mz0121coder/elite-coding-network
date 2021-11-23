@@ -116,12 +116,12 @@ function MsgAlertModal({
 
         <List.Item>
           <Icon name ="hand point right" />
-          Inside the menu, there is a setting named...............
+          Inside the menu, there is a setting named: Show New Message Popup?
         </List.Item>
 
         <List.Item>
           <Icon name ="hand point right" />
-          Just toggle ddddddddddddddddddddddddddddddddddddddddd.
+          Just toggle the setting to disable/enable the Messsage Popup to appear.
         </List.Item>
         
 
