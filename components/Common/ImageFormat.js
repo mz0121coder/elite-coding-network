@@ -44,62 +44,65 @@ function ImageFormat ({
 
     return (
         <>
-        <Form.Field>
+          <Form.Field>
             <Segment placeholder basic secondary>
-                <input
-                style = {{ display: "none"}}
-                type= "file"
-                accept = "image/*"
+              <input
+                style={{ display: "none" }}
+                type="file"
+                accept="image/*"
                 onChange={handleChange}
                 name="media"
                 ref={inputRef}
-                />
-        <div
-            onDragOver={(e) => {
-              e.preventDefault();
-              setHighlight(true);
-            }}
-            onDragLeave={(e) => {
-              e.preventDefault();
-              setHighlight(false);
-            }}
-            onDrop={(e) => {
-              e.preventDefault();
-              setHighlight(true);
-
-              const droppedFile = Array.from(e.dataTransfer.files);
-              setMedia(droppedFile[0]);
-              setMediaPreview(URL.createObjectURL(droppedFile[0]));
-            }}
-
-            {mediaPreview === null ? (
-                <>
-                  <Segment
-                    {...(highlight && { color: "green" })}
-                    placeholder
-                    basic
-                  >
-                    {checkForSignupPage()}
+              />
+    
+              <div
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setHighlight(true);
+                }}
+                onDragLeave={(e) => {
+                  e.preventDefault();
+                  setHighlight(false);
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  setHighlight(true);
+    
+                  const droppedFile = Array.from(e.dataTransfer.files);
+                  setMedia(droppedFile[0]);
+                  setMediaPreview(URL.createObjectURL(droppedFile[0]));
+                }}
+              >
+                {mediaPreview === null ? (
+                  <>
+                    <Segment
+                      {...(highlight && { color: "green" })}
+                      placeholder
+                      basic
+                    >
+                      {checkForSignupPage()}
+                    </Segment>
+                  </>
+                ) : (
+                  <Segment color="green" placeholder basic>
+                    <Image
+                      src={mediaPreview}
+                      size="medium"
+                      centered
+                      style={{ cursor: "pointer" }}
+                      onClick={() => inputRef.current.click()}
+                    />
                   </Segment>
-                </>
-              ) : (
-                <Segment color="green" placeholder basic>
-                  <Image
-                    src={mediaPreview}
-                    size="medium"
-                    centered
-                    style={{ cursor: "pointer" }}
-                    onClick={() => inputRef.current.click()}
-                  />
-                </Segment>
-              )}
-            </div>
-          </Segment>
-        </Form.Field>
-      </>
-    );
-  }
-  
+                )}
+              </div>
+            </Segment>
+          </Form.Field>
+        </>
+      );
+    }
+    
+    export default ImageFormat;
+    
 
-        export default ImageFormat;
+
 
