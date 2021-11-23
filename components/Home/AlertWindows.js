@@ -1,135 +1,50 @@
-import { Segment, TransitionWindow, Icon, Feed} from "semantic-ui-react";
+import { Segment, TransitionWindow, Icon, Feed } from "semantic-ui-react";
 import newMsgSound from "../../utils/newMsgSound";
 import { useRouter } from "next/router";
 import calcTime from "../../utils/calcTime";
-import MsgAlertModal from "./MsgAlertModal";
 
-function MsgAlertModal ({
-    socket,
-    showNewMsgModal,
-    newMsgModal,
-    newMsgRecievedAlert,
-    user,
+function AlertWindows({ newAlert, alertPopup, showAlertPopup }) {
+  const router = useRouter();
 
-})  {
-    const [text, setText] = useState ("");
-    const [loading, setLoading] =useState (false);
+  const { name, dpLink, username, postId } = newAlert;
 
-    const onModalClose = ()=> showNewMsgModal (false);
-
-    const formSumbit = (e) => {
-        e.preventDefault ();
-
-        if (socket.current) {
-            socket.current.emit("sendMsgFromAlert", {
-                userId: user._id,
-                msgSendToUserId: newMsgRecievedAlert.sender,
-                msg: text,
-            });
-
-            socket.current.on("msgSentFromAlert", () =>{
-                showNewMsgModal(false);
-            });
-        }
-    };
-
-    
   return (
-    <>
-      <Modal
-        size="small"
-        open={newMsgModal}
-        onClose={onModalClose}
-        closeIcon
-        closeOnDimmerClick
+    <TransitionWindow
+      transition={{ animation: "fade left", duration: "500" }}
+      onClose={() => alertPopup && showAlertPopup(false)}
+      onOpen={newMsgSound}
+      open={alertPopup}
+    >
+      <Segment
+        style={{ right: "5%", position: "fixed", top: "10%", zIndex: 1000 }}
       >
-        <Modal.Header
-          content={`New Message from ${newMsgReceivedAlert.senderName}`}
+        <Icon
+          name="close"
+          size="large"
+          style={{ float: "right", cursor: "pointer" }}
+          onClick={() => showAlertPopup(false)}
         />
 
-        <Modal.Content>
-          <div className="bubbleWrapper">
-            <div className="inlineContainer">
-              <img
-                className="inlineIcon"
-                src={newMsgReceivedAlert.senderProfilePic}
-              />
-            </div>
-
-            <div className="otherBubble other">{newMsgReceivedAlert.msg}</div>
-
-            <span className="other">{calcTime(newMsgReceivedAlert.date)}</span>
-          </div>
-
-          <div style={{ position: "sticky", bottom: "0px" }}>
-            <Segment secondary color="teal" attached="bottom">
-              <Form reply onSubmit={formSubmit}>
-                <Form.Input
-                  size="large"
-                  placeholder="Send New Message"
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  action={{
-                    color: "blue",
-                    icon: "telegram plane",
-                    disabled: text === "",
-                    loading: loading,
-                  }}
-                />
-              </Form>
-            </Segment>
-          </div>
-
-          <div style={{ marginTop: "5px" }}>
-            <Link href={`/messages?message=${newMsgReceivedAlert.sender}`}>
-              <a>View All Messages</a>
-            </Link>
-
-            <br />
-
-            <Instructions username={user.username} />
-          </div>
-        </Modal.Content>
-      </Modal>
-    </>
+        <Feed>
+          <Feed.Event>
+            <Feed.Label>
+              <img src={dpLink} />
+            </Feed.Label>
+            <Feed.Content>
+              <Feed.Summary>
+                <Feed.User onClick={() => router.push(`/${username}`)}>
+                  {name}{" "}
+                </Feed.User>{" "}
+                liked your{" "}
+                <a onClick={() => router.push(`/post/${postId}`)}> post</a>
+                <Feed.Date>{calcTime(Date.now())}</Feed.Date>
+              </Feed.Summary>
+            </Feed.Content>
+          </Feed.Event>
+        </Feed>
+      </Segment>
+    </TransitionWindow>
   );
 }
 
-const Instructions = ({ username }) => (
-  <List>
-    <List.Item>
-      <Icon name="help" />
-      <List.Content>
-        <List.Header>
-          If you do not like this popup to appear when you receive a new
-          message:
-        </List.Header>
-      </List.Content>
-    </List.Item>
-
-    <List.Item>
-      <Icon name="hand point right" />
-      <List.Content>
-        You can disable it by going to
-        <Link href={`/${username}`}>
-          <a> Account </a>
-        </Link>
-        Page and clicking on Settings Tab.
-      </List.Content>
-    </List.Item>
-
-    <List.Item>
-      <Icon name="hand point right" />
-      Inside the menu,there is an setting named: Show New Message Popup?
-    </List.Item>
-
-    <List.Item>
-      <Icon name="hand point right" />
-      Just toggle the setting to disable/enable the Message Popup to appear.
-    </List.Item>
-  </List>
-);
-
-export default MsgAlertModal;
-
-
+export default AlertWindows;
