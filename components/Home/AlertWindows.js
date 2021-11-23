@@ -33,10 +33,26 @@ function MsgAlertModal ({
         }
     };
 
-    
+    return (
+        <> 
+        <Modal
+        size = "small"
+        open= {newMsgModal}
+        onClose={onModalClose}
+        closeIcon
+        closeOnDimmerClick
+        >
+            <Modal.Header
+            content = {`New Message from $newMsgReceivedAlert.senderName}`}
+            />
 
-        
-            })
-        }
-    }
-}
+            <Modal.Content>
+                <div className="bubbleWrapper">
+                    <div className="inlineContainer">
+                        <img
+                        className="inlineIcon">
+                            src={newMsgReceivedAlert.senderProfilePicture}
+                            />
+                </div>
+            </Modal.Content>
+    )
