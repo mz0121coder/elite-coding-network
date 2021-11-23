@@ -131,3 +131,14 @@ function Layout({ children, user }) {
                 </Ref>
               </Media>
 
+              <Media between={["zero", "mobile"]}>
+                <ResponsiveHeader user={user} />
+                <Grid>
+                  <Grid.Column>{children}</Grid.Column>
+                </Grid>
+              </Media>
+            </div>
+          </MediaContextProvider>
+        </>
+      ) : (
+
