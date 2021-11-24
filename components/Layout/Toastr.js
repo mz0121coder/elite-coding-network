@@ -25,3 +25,29 @@ export const PostDeleteToastr = () => {
     </ToastContainer>
   );
 };
+
+export const ErrorToastr = ({ error }) => {
+  return (
+    <ToastContainer
+      position="bottom-center"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover={false}
+    >
+      {toast.error(error, {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      })}
+    </ToastContainer>
+  );
+};
