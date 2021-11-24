@@ -11,3 +11,13 @@ function SearchTab() {
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState([]);
   
+    const handleChange = async (e) => {
+        const { value } = e.target;
+        setText(value);
+    
+        if (value.length === 0) return;
+        if (value.trim().length === 0) return;
+    
+        setText(value);
+        setLoading(true);
+    
