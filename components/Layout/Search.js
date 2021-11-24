@@ -5,3 +5,9 @@ import cookie from "js-cookie";
 import Router from "next/router";
 import mainUrl from "../../utils/mainUrl";
 let cancel;
+
+function SearchTab() {
+    const [text, setText] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [results, setResults] = useState([]);
+  
