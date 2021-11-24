@@ -71,3 +71,19 @@ export const phAlerts = () =>
       <Divider hidden />
     </>
   ));
+
+export const EndMsg = () => (
+  <Container textAlign="center">
+    <Icon name="refresh" size="large" />
+    <Divider hidden />
+  </Container>
+);
+
+export const placeholderForLikes = () =>
+  range(1, 6).map((item) => (
+    <Placeholder key={item} style={{ minWidth: "200px" }}>
+      <Placeholder.Header image>
+        <Placeholder.Line length="full" />
+      </Placeholder.Header>
+    </Placeholder>
+  ));
