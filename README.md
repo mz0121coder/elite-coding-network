@@ -2,8 +2,7 @@
 
 ## Instructions
 
-No installation needed.  
-View the live application here:
+View the live application here: https://elite-coding-network.herokuapp.com/
 
 ## Overview
 
@@ -31,7 +30,7 @@ From technical questions to career related advice as well as the odd engineer me
 
 [React-toastify](https://www.npmjs.com/package/react-toastify) - Awesome progress bars and transitions when moving through different pages in the app.
 
-[Cloudinary](https://cloudinary.com/) - Very popular platform for intergrating image upload features into full stack applications.
+[Cloudinary](https://cloudinary.com/) - Very popular platform for integrating image upload features into full stack applications.
 
 [React-cropper](https://www.npmjs.com/package/react-cropper) - Image cropping as a React component (when creating posts)
 
@@ -42,4 +41,15 @@ From technical questions to career related advice as well as the odd engineer me
 Created by Mohammad, Satpal, Clary.  
 Special thanks to our wonderful friend Viktorija.
 
+## Initial Wireframe
+
+![ecn-wireframe](./public/ecn-wireframe.png)
+
 ## Screenshots
+
+![ecn-1](./public/ecn-1.png)  
+![ecn-2](./public/ecn-2.png)
+
+## Demo
+
+![ecn-demo](./public/ecn-demo.gif)
